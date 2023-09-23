@@ -13,7 +13,7 @@ public class Diagram
     public int Width { get; set; }
     public int Height { get; set; }
 
-    public string Title { get; set; } //diagram title
+    public string Title { get; set; } = ""; //diagram title
     public List<Property> properties = new List<Property>();
     public List<Method> methods = new List<Method>();
 

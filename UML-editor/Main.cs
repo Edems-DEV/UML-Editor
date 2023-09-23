@@ -80,7 +80,7 @@ public partial class Main : Form
     {
         app.Edit(e.Location);
     }
-    
+
     private bool isDragging = false;
     private Point offset;
     private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
@@ -88,7 +88,7 @@ public partial class Main : Form
         if (app.SelectDiagram(e.Location) != null)
         {
             isDragging = true;
-            offset = new Point(e.X - app.ActiveDiagram.X , e.Y - app.ActiveDiagram.Y);
+            offset = new Point(e.X - app.ActiveDiagram.X, e.Y - app.ActiveDiagram.Y);
         }
     }
     private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
@@ -97,7 +97,7 @@ public partial class Main : Form
         {
             app.ActiveDiagram.X = e.X - offset.X;
             app.ActiveDiagram.Y = e.Y - offset.Y;
-            
+
             app.Draw(pictureBox1.CreateGraphics());
 
             pictureBox1.Invalidate(); // Redraw the PictureBox

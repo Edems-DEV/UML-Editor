@@ -37,10 +37,11 @@
             // 
             // pictureBox1
             // 
+            pictureBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             pictureBox1.BackColor = SystemColors.ButtonFace;
             pictureBox1.Location = new Point(12, 12);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(776, 426);
+            pictureBox1.Size = new Size(1160, 542);
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             pictureBox1.DragDrop += pictureBox1_DragDrop;
@@ -53,7 +54,8 @@
             // 
             // btn_Add
             // 
-            btn_Add.Location = new Point(3, 444);
+            btn_Add.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btn_Add.Location = new Point(12, 560);
             btn_Add.Name = "btn_Add";
             btn_Add.Size = new Size(75, 23);
             btn_Add.TabIndex = 1;
@@ -63,7 +65,8 @@
             // 
             // btn_Load
             // 
-            btn_Load.Location = new Point(713, 444);
+            btn_Load.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btn_Load.Location = new Point(1097, 560);
             btn_Load.Name = "btn_Load";
             btn_Load.Size = new Size(75, 23);
             btn_Load.TabIndex = 2;
@@ -73,7 +76,8 @@
             // 
             // btn_Save
             // 
-            btn_Save.Location = new Point(632, 444);
+            btn_Save.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btn_Save.Location = new Point(1016, 560);
             btn_Save.Name = "btn_Save";
             btn_Save.Size = new Size(75, 23);
             btn_Save.TabIndex = 3;
@@ -86,7 +90,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaption;
-            ClientSize = new Size(800, 475);
+            ClientSize = new Size(1184, 591);
             Controls.Add(btn_Save);
             Controls.Add(btn_Load);
             Controls.Add(btn_Add);

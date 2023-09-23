@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\root\\Desktop\\UML-editor\\UML-editor\\UML-editor.csproj",
+      "projectUniqueName": "C:\\Users\\root\\Documents\\GitHub\\UML-Editor\\UML-editor\\UML-editor.csproj",
       "projectName": "UML-editor",
-      "projectPath": "C:\\Users\\root\\Desktop\\UML-editor\\UML-editor\\UML-editor.csproj",
+      "projectPath": "C:\\Users\\root\\Documents\\GitHub\\UML-Editor\\UML-editor\\UML-editor.csproj",
       "packagesPath": "C:\\Users\\root\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\root\\Desktop\\UML-editor\\UML-editor\\obj\\",
+      "outputPath": "C:\\Users\\root\\Documents\\GitHub\\UML-Editor\\UML-editor\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\root\\AppData\\Roaming\\NuGet\\NuGet.Config",

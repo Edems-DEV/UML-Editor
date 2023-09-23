@@ -12,11 +12,14 @@ namespace UML_editor;
 
 public partial class EditWin : Form
 {
-    Diagram diagram;
     public EditWin(Diagram diagram)
     {
         InitializeComponent();
 
-        this.dataGridView1.DataSource = diagram.methods;
+        this.textBox_Title.Text = diagram.Title;
+        this.Grid_Methods.DataSource = diagram.methods;
+        this.Grid_Props.DataSource = diagram.properties;
+
+        Grid_Props.RowHeadersVisible = false;
     }
 }
