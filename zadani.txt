@@ -1,0 +1,24 @@
+UML editor
+
+Class diagram
++ public
+- private
+% proteced?
+
+GDI =>
+- lze přesouvat, resizovat, editovat
+- doble click => edit-form
+- uložen v souboru nebo databázi (zpětné načítaní)
+- možnost více tříd (add, edit, delete)
+- add botton (jedno kam)
+
+třída
+- Class diagram
+list 
+* prperties
+* method
+()
+
+
+
+Pondělí (čas) [ve středu kontrola?]
