@@ -19,6 +19,7 @@ public class Diagram
     public BindingList<Method> methods { get; set; } = new BindingList<Method>();
 
     public bool Selected { get; set; } = false;
+    public SelectPoints points { get; set; }
 
     public Graphics g;
 
@@ -117,13 +118,13 @@ public class Diagram
         rect2.Offset(2, YOffset);
         g.DrawString(MergedText, font, BrushFont, rect2);
     }
-    private List<Rectangle> DrawSelection(Graphics g, Point farthestPoint)
+    private SelectPoints DrawSelection(Graphics g, Point farthestPoint)
     {
         int size = 10;
 
-        SelectPoints Poins = new SelectPoints(X, Y, farthestPoint, size);
+        points = new SelectPoints(X, Y, farthestPoint, size);
 
-        foreach (var point in Poins.MakeList())
+        foreach (var point in points.MakeList())
         {
             g.FillRectangle(BrushFont, point);
         }

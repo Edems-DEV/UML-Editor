@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace UML_editor;
-internal class SelectPoints
+public class SelectPoints
 {
     public int X { get; set; }
     public int Y { get; set; }

@@ -97,6 +97,17 @@ internal class App
 
         return ActiveDiagram;
     }
+    public void SelectPoint(Point loc)
+    {
+        //foreach (var diagram in Diagrams)
+        //{
+        //    foreach (var point in diagram.points.MakeList())
+        //    {
+        //        point.
+        //    }
+            
+        //}
+    }
 
     #region Save/Load
     //TODO: move to FileService

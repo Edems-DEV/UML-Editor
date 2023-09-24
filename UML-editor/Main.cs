@@ -27,7 +27,7 @@ public partial class Main : Form
     {
         app.Draw(e.Graphics);
     }
-
+    #region Btn
     private void btn_Add_Click(object sender, EventArgs e)
     {
         app.Add(pictureBox1.CreateGraphics());
@@ -43,7 +43,9 @@ public partial class Main : Form
         app.Load(pictureBox1.CreateGraphics(), "C:/Users/root/Desktop/M/diagrams.json");
         this.pictureBox1.Refresh();
     }
+    #endregion
 
+    #region DragDrop
     private void pictureBox1_DragDrop(object sender, DragEventArgs e)
     {
         string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
@@ -76,6 +78,7 @@ public partial class Main : Form
 
         e.Effect = DragDropEffects.None;
     }
+    #endregion
     private void pictureBox1_MouseDoubleClick_1(object sender, MouseEventArgs e)
     {
         app.Edit(e.Location);
@@ -85,7 +88,11 @@ public partial class Main : Form
     private Point offset;
     private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
     {
-        if (app.SelectDiagram(e.Location) != null)
+        if (false)
+        {
+
+        }
+        else if (app.SelectDiagram(e.Location) != null)
         {
             isDragging = true;
             offset = new Point(e.X - app.ActiveDiagram.X, e.Y - app.ActiveDiagram.Y);
