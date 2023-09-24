@@ -123,14 +123,15 @@ public class Diagram
     {
         int size = 10;
 
-        //Colums (Y)
-        int c1 = Y;
-        int c2 = Y + (farthestPoint.Y / 2);
-        int c3 = Y + farthestPoint.Y;
-        //Rows (X)
-        int r1 = X;
-        int r2 = X + (farthestPoint.X / 2);
-        int r3 = X + farthestPoint.X;
+        // Calculate center points for columns (Y)
+        int c1 = Y - (size / 2);
+        int c2 = Y + (farthestPoint.Y / 2) - (size / 2);
+        int c3 = Y + farthestPoint.Y - (size / 2);
+
+        // Calculate center points for rows (X)
+        int r1 = X - (size / 2);
+        int r2 = X + (farthestPoint.X / 2) - (size / 2);
+        int r3 = X + farthestPoint.X - (size / 2);
 
         List<Rectangle> points = new List<Rectangle>();
         //Top
