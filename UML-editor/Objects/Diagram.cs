@@ -18,7 +18,7 @@ public class Diagram
     public BindingList<Property> properties { get; set; }  = new BindingList<Property>();
     public BindingList<Method> methods { get; set; } = new BindingList<Method>();
 
-    public bool Selected { get; set; }
+    public bool Selected { get; set; } = true;
 
     public Graphics g;
 
@@ -50,23 +50,28 @@ public class Diagram
 
     public void Draw(Graphics g)
     {
+        //Calc size
         SizeF x1 = SizeCalc(Title, SizeTitle);
         SizeF x2 = SizeCalc(string.Join("\n", properties.Cast<Parametr>().ToList()), SizeOther);
         SizeF x3 = SizeCalc(string.Join("\n", properties.Cast<Parametr>().ToList()), SizeOther);
 
         int a = (int)x1.Height;
         int b = (int)x2.Height + YOffset;
-        int c = (int)x3.Height + +YOffset;
+        int c = (int)x3.Height + YOffset;
 
         int h = a + b + c; //a,b,c => dont calcul twice
 
+        //Add calulated bonus space
         int bonusSpace = Math.Max((Height - h)/2, 0);
         b = b + bonusSpace;
         c = c + bonusSpace;
 
+        h = a + b + c;
+
         List<float> xxx = new List<float>() { x1.Width, x2.Width, x3.Width };
         int minWidth = Math.Max((int)xxx.Max(), Width);
 
+        //Draw
         Rectangle rect = new Rectangle(X, Y, minWidth, Height);
         rect.Height = a;
         DrawTitle(g, rect);
@@ -76,6 +81,11 @@ public class Diagram
         rect.Y += b;
         rect.Height = c;
         DrawSection(g, rect, methods.Cast<Parametr>().ToList());
+        DrawSelection(g, new Point(minWidth, h));
+        //DrawSelection(g, new Point(h, minWidth));
+
+        //if (Selected)
+        //    DrawSelection(new Point(minWidth, h));
     }
     private SizeF SizeCalc(string text, int fontSize)
     {
@@ -108,6 +118,40 @@ public class Diagram
         Rectangle rect2 = rect;
         rect2.Offset(2, YOffset);
         g.DrawString(MergedText, font, BrushFont, rect2);
+    }
+    private void DrawSelection(Graphics g, Point farthestPoint)
+    {
+        int size = 10;
+
+        //Colums (Y)
+        int c1 = Y;
+        int c2 = Y + (farthestPoint.Y / 2);
+        int c3 = Y + farthestPoint.Y;
+        //Rows (X)
+        int r1 = X;
+        int r2 = X + (farthestPoint.X / 2);
+        int r3 = X + farthestPoint.X;
+
+        List<Rectangle> points = new List<Rectangle>();
+        //Top
+        points.Add(new Rectangle(r1, c1, size, size));
+        points.Add(new Rectangle(r1, c2, size, size));
+        points.Add(new Rectangle(r1, c3, size, size));
+
+        //Mid
+        points.Add(new Rectangle(r2, c1, size, size));
+        points.Add(new Rectangle(r2, c3, size, size));
+
+        //Bottom
+        points.Add(new Rectangle(r3, c1, size, size));
+        points.Add(new Rectangle(r3, c2, size, size));
+        points.Add(new Rectangle(r3, c3, size, size));
+
+        foreach (var point in points)
+        {
+            //TODO: center
+            g.FillRectangle(BrushFont, point);
+        }
     }
 
     //string.Join("\n", list);
