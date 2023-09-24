@@ -14,12 +14,14 @@ internal class App
     public Diagram ActiveDiagram { get; private set; } = null;
     public int Width { get; set; }
     public int Height { get; set; }
+    public Graphics g { get; set; }
 
 
-    public App(int width, int height)
+    public App(Graphics g, int width, int height)
     {
         this.Width = width;
         this.Height = height;
+        this.g = g;
 
         Diagrams.Add(new Diagram() { Title = "Diagram1", X = 10, Y = 10, Width = 300, Height = 200 });
 
@@ -33,6 +35,14 @@ internal class App
             return;
 
         EditWin form = new EditWin(ActiveDiagram);
+
+        form.OkButtonClicked += (sender, e) =>
+        {
+            form.Close();
+
+            Draw(g);
+        };
+
         form.ShowDialog();
     }
 

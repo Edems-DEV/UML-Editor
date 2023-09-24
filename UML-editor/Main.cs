@@ -18,7 +18,7 @@ public partial class Main : Form
     {
         InitializeComponent();
 
-        app = new App(this.pictureBox1.Width, this.pictureBox1.Height);
+        app = new App(pictureBox1.CreateGraphics(), this.pictureBox1.Width, this.pictureBox1.Height);
 
         pictureBox1.AllowDrop = true;
     }

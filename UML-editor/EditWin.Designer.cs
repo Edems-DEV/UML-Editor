@@ -46,7 +46,7 @@
             // Grid_Methods
             // 
             Grid_Methods.AllowUserToOrderColumns = true;
-            Grid_Methods.Anchor = AnchorStyles.Top;
+            Grid_Methods.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             Grid_Methods.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             Grid_Methods.Columns.AddRange(new DataGridViewColumn[] { Attribute, Name, Type });
             Grid_Methods.Location = new Point(13, 219);
@@ -90,6 +90,7 @@
             btn_Ok.TabIndex = 1;
             btn_Ok.Text = "Ok";
             btn_Ok.UseVisualStyleBackColor = true;
+            btn_Ok.Click += btn_Ok_Click;
             // 
             // btn_D_Delete
             // 
@@ -103,6 +104,7 @@
             // 
             // Grid_Props
             // 
+            Grid_Props.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             Grid_Props.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             Grid_Props.Columns.AddRange(new DataGridViewColumn[] { V, Names, Type2 });
             Grid_Props.Location = new Point(13, 41);
@@ -136,6 +138,7 @@
             // 
             // textBox_Title
             // 
+            textBox_Title.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             textBox_Title.Location = new Point(13, 12);
             textBox_Title.Name = "textBox_Title";
             textBox_Title.Size = new Size(240, 23);
@@ -153,6 +156,9 @@
             Controls.Add(btn_D_Delete);
             Controls.Add(btn_Ok);
             Controls.Add(Grid_Methods);
+            MaximizeBox = false;
+            MaximumSize = new Size(500, 476);
+            MinimumSize = new Size(281, 476);
             //Name = "EditWin";
             Text = "UML Editor";
             ((System.ComponentModel.ISupportInitialize)Grid_Methods).EndInit();
