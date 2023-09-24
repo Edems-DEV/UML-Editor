@@ -25,7 +25,7 @@ internal class App
         
         Diagrams.Add(new Diagram(g) { Title = "Diagram1", X = 10, Y = 10, Width = 300, Height = 200 });
 
-        Diagrams.Add(new Diagram(g) { Title = "Diagram2", X = 400, Y = 10, Width = 300, Height = 300000 }); //TODO: Height rensposible, no static
+        Diagrams.Add(new Diagram(g) { Title = "Diagram2", X = 400, Y = 10, Width = 300, Height = 300 }); //TODO: Height rensposible, no static
     }
 
     public void Edit(Point location)

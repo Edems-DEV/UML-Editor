@@ -104,6 +104,7 @@ partial class ListWin
         Controls.Add(btn_Cancel);
         Controls.Add(btn_Ok);
         Controls.Add(label_Name);
+        
         Controls.Add(Grid_List);
         //Name = "ListWin";
         Text = "UML Editor";

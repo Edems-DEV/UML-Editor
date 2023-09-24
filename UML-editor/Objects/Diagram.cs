@@ -48,18 +48,6 @@ public class Diagram
         #endregion
     }
 
-    public void Draw2(Graphics g)
-    {
-        //Rectangle rect = new Rectangle(X, Y, Width, Height);
-        //g.FillRectangle(BrushBg, rect); //debug
-        //int h = Y;
-        //DrawTitle(g,rect); //h += 
-        //rect.Y = h;
-        //h += DrawSection(g, rect, properties.Cast<Parametr>().ToList());
-        //rect.Y = h;
-        //h += DrawSection(g, rect, methods.Cast<Parametr>().ToList());
-    }
-
     public void Draw(Graphics g)
     {
         int a = SizeCalc(Title, SizeTitle);
@@ -68,25 +56,18 @@ public class Diagram
         int h = a + b + c; //a,b,c => dont calcul twice
 
         int bonusSpace = Math.Max((Height - h)/2, 0);
+        b = b + bonusSpace;
+        c = c + bonusSpace;
 
         Rectangle rect = new Rectangle(X, Y, Width, Height);
         rect.Height = a;
         DrawTitle(g, rect);
         rect.Y += a;
-        rect.Height = b + bonusSpace;
+        rect.Height = b;
         DrawSection(g, rect, properties.Cast<Parametr>().ToList());
-        rect.Y += b + bonusSpace;
-        rect.Height = c + bonusSpace;
+        rect.Y += b;
+        rect.Height = c;
         DrawSection(g, rect, methods.Cast<Parametr>().ToList());
-    }
-
-    private int TotalSize()
-    {
-        int h = 0;
-        h += SizeCalc(Title, SizeTitle);
-        h += SizeCalc(string.Join("\n", properties.Cast<Parametr>().ToList()), SizeOther);
-        h += SizeCalc(string.Join("\n", properties.Cast<Parametr>().ToList()), SizeOther);
-        return h;
     }
     private int SizeCalc(string text, int fontSize)
     {
@@ -112,7 +93,6 @@ public class Diagram
         string MergedText = string.Join("\n", list);                       
 
         Font font = new Font(FontFamily, SizeOther);                              
-        
 
         g.FillRectangle(BrushBg, rect); 
         g.DrawRectangle(PenBorder, rect);
@@ -138,5 +118,17 @@ public class Diagram
     //    g.DrawString(text, font, BrushFont, rect2);
 
     //    return textHeight;
+    //}
+
+    //public void draw2(graphics g)
+    //{
+    //    //rectangle rect = new rectangle(x, y, width, height);
+    //    //g.fillrectangle(brushbg, rect); //debug
+    //    //int h = y;
+    //    //drawtitle(g,rect); //h += 
+    //    //rect.y = h;
+    //    //h += drawsection(g, rect, properties.cast<parametr>().tolist());
+    //    //rect.y = h;
+    //    //h += drawsection(g, rect, methods.cast<parametr>().tolist());
     //}
 }
