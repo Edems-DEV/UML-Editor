@@ -18,7 +18,7 @@ public class Diagram
     public BindingList<Property> properties { get; set; }  = new BindingList<Property>();
     public BindingList<Method> methods { get; set; } = new BindingList<Method>();
 
-    public bool Selected { get; set; } = true;
+    public bool Selected { get; set; } = false;
 
     public Graphics g;
 
@@ -81,11 +81,9 @@ public class Diagram
         rect.Y += b;
         rect.Height = c;
         DrawSection(g, rect, methods.Cast<Parametr>().ToList());
-        DrawSelection(g, new Point(minWidth, h));
-        //DrawSelection(g, new Point(h, minWidth));
 
-        //if (Selected)
-        //    DrawSelection(new Point(minWidth, h));
+        if (Selected)
+            DrawSelection(g, new Point(minWidth, h));
     }
     private SizeF SizeCalc(string text, int fontSize)
     {
@@ -119,7 +117,7 @@ public class Diagram
         rect2.Offset(2, YOffset);
         g.DrawString(MergedText, font, BrushFont, rect2);
     }
-    private void DrawSelection(Graphics g, Point farthestPoint)
+    private List<Rectangle> DrawSelection(Graphics g, Point farthestPoint)
     {
         int size = 10;
 
@@ -153,6 +151,8 @@ public class Diagram
             //TODO: center
             g.FillRectangle(BrushFont, point);
         }
+
+        return points;
     }
 
     //string.Join("\n", list);

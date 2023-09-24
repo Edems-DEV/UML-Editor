@@ -86,7 +86,15 @@ internal class App
             }
         }
 
+        //deselect old
+        if (ActiveDiagram != null)
+            ActiveDiagram.Selected = false;
+        //select new
         ActiveDiagram = newActiveDiagram;
+        // select new
+        if (ActiveDiagram != null)
+            ActiveDiagram.Selected = true;
+
         return ActiveDiagram;
     }
 
@@ -122,4 +130,12 @@ internal class App
         }
     }
     #endregion
+
+    public void RemoveActiveDiagram()
+    {
+        MessageBox.Show("Delete key is pressed!");
+        if (ActiveDiagram != null)
+            Diagrams.RemoveAll(diagram => diagram.Selected);
+        Draw(g);
+    }
 }

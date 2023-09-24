@@ -97,6 +97,7 @@
             Controls.Add(pictureBox1);
             Name = "Main";
             Text = "UML Editor";
+            KeyDown += Main_KeyDown;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }

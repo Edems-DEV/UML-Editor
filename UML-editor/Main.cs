@@ -107,4 +107,12 @@ public partial class Main : Form
     {
         isDragging = false;
     }
+
+    private void Main_KeyDown(object sender, KeyEventArgs e)
+    {
+        MessageBox.Show("KeyDown"); //WTF, broken idk why :)
+
+        if (e.KeyCode == Keys.Delete)
+            app.RemoveActiveDiagram();
+    }
 }
