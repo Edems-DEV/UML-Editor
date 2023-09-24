@@ -53,6 +53,7 @@
             Grid_Methods.Name = "Grid_Methods";
             Grid_Methods.RowHeadersVisible = false;
             Grid_Methods.RowTemplate.Height = 25;
+            Grid_Methods.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             Grid_Methods.Size = new Size(240, 177);
             Grid_Methods.TabIndex = 0;
             // 
@@ -112,8 +113,10 @@
             Grid_Props.Name = "Grid_Props";
             Grid_Props.RowHeadersVisible = false;
             Grid_Props.RowTemplate.Height = 25;
+            Grid_Props.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             Grid_Props.Size = new Size(240, 172);
             Grid_Props.TabIndex = 3;
+            Grid_Props.KeyDown += Grid_Props_KeyDown;
             // 
             // V
             // 

@@ -14,6 +14,7 @@ public partial class EditWin : Form
 {
     private Diagram diagram;
     public event EventHandler OkButtonClicked;
+
     public EditWin(Diagram diagram)
     {
         this.diagram = diagram;
@@ -30,8 +31,8 @@ public partial class EditWin : Form
     private void btn_Ok_Click(object sender, EventArgs e)
     {
         diagram.Title = this.textBox_Title.Text;
-        diagram.methods = (List<Method>)this.Grid_Methods.DataSource;
-        diagram.properties = (List<Property>)this.Grid_Props.DataSource;
+        diagram.methods = (BindingList<Method>)this.Grid_Methods.DataSource;
+        diagram.properties = (BindingList<Property>)this.Grid_Props.DataSource;
 
         OkButtonClicked?.Invoke(this, EventArgs.Empty);
 
@@ -41,5 +42,19 @@ public partial class EditWin : Form
     private void btn_Storno_Click(object sender, EventArgs e)
     {
         this.Close();
+    }
+
+    private void Grid_Props_KeyDown(object sender, KeyEventArgs e)
+    {
+        //if (e.KeyCode == Keys.Delete)
+        //{
+        //    Grid_Props.Rows.RemoveAt(Grid_Props.SelectedRows[0].Index);
+        //}
+        //if (e.KeyCode == Keys.Insert || e.Control && e.KeyCode == Keys.N)
+        //{
+        //    Grid_Props.Rows.RemoveAt(Grid_Props.SelectedRows[0].Index);
+        //}
+
+        //binding list fixed grids default add/remove
     }
 }

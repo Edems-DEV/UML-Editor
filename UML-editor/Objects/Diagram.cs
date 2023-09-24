@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,8 +15,8 @@ public class Diagram
     public int Height { get; set; }
 
     public string Title { get; set; } = ""; //diagram title
-    public List<Property> properties { get; set; }  = new List<Property>();
-    public List<Method> methods { get; set; } = new List<Method>();
+    public BindingList<Property> properties { get; set; }  = new BindingList<Property>();
+    public BindingList<Method> methods { get; set; } = new BindingList<Method>();
 
 
     #region Options
