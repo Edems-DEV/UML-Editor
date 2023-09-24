@@ -33,7 +33,7 @@
             Name = new DataGridViewTextBoxColumn();
             Type = new DataGridViewTextBoxColumn();
             btn_Ok = new Button();
-            btn_D_Delete = new Button();
+            btn_Storno = new Button();
             Grid_Props = new DataGridView();
             V = new DataGridViewTextBoxColumn();
             Names = new DataGridViewTextBoxColumn();
@@ -92,15 +92,16 @@
             btn_Ok.UseVisualStyleBackColor = true;
             btn_Ok.Click += btn_Ok_Click;
             // 
-            // btn_D_Delete
+            // btn_Storno
             // 
-            btn_D_Delete.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            btn_D_Delete.Location = new Point(94, 402);
-            btn_D_Delete.Name = "btn_D_Delete";
-            btn_D_Delete.Size = new Size(75, 23);
-            btn_D_Delete.TabIndex = 2;
-            btn_D_Delete.Text = "Delete";
-            btn_D_Delete.UseVisualStyleBackColor = true;
+            btn_Storno.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btn_Storno.Location = new Point(94, 402);
+            btn_Storno.Name = "btn_Storno";
+            btn_Storno.Size = new Size(75, 23);
+            btn_Storno.TabIndex = 2;
+            btn_Storno.Text = "Storno";
+            btn_Storno.UseVisualStyleBackColor = true;
+            btn_Storno.Click += btn_Storno_Click;
             // 
             // Grid_Props
             // 
@@ -153,7 +154,7 @@
             ClientSize = new Size(265, 437);
             Controls.Add(textBox_Title);
             Controls.Add(Grid_Props);
-            Controls.Add(btn_D_Delete);
+            Controls.Add(btn_Storno);
             Controls.Add(btn_Ok);
             Controls.Add(Grid_Methods);
             MaximizeBox = false;
@@ -171,7 +172,7 @@
 
         private DataGridView Grid_Methods;
         private Button btn_Ok;
-        private Button btn_D_Delete;
+        private Button btn_Storno;
         private DataGridView Grid_Props;
         private TextBox textBox_Title;
         private DataGridViewTextBoxColumn Attribute;
