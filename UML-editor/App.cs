@@ -22,10 +22,10 @@ internal class App
         this.Width = width;
         this.Height = height;
         this.g = g;
+        
+        Diagrams.Add(new Diagram(g) { Title = "Diagram1", X = 10, Y = 10, Width = 300, Height = 200 });
 
-        Diagrams.Add(new Diagram() { Title = "Diagram1", X = 10, Y = 10, Width = 300, Height = 200 });
-
-        Diagrams.Add(new Diagram() { Title = "Diagram2", X = 400, Y = 10, Width = 300, Height = 300000 }); //TODO: Height rensposible, no static
+        Diagrams.Add(new Diagram(g) { Title = "Diagram2", X = 400, Y = 10, Width = 300, Height = 300000 }); //TODO: Height rensposible, no static
     }
 
     public void Edit(Point location)
@@ -119,7 +119,7 @@ internal class App
         int centerX = (Width - diagramWidth) / 2;
         int centerY = (Height - diagramHeight) / 2;
 
-        Diagrams.Add(new Diagram() { Title = "New Diagram", X = centerX, Y = centerY, Width = diagramWidth, Height = diagramHeight });
+        Diagrams.Add(new Diagram(g) { Title = "New Diagram", X = centerX, Y = centerY, Width = diagramWidth, Height = diagramHeight });
         Draw(g);
     }
 }

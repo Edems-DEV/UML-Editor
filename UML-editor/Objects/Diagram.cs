@@ -18,6 +18,9 @@ public class Diagram
     public BindingList<Property> properties { get; set; }  = new BindingList<Property>();
     public BindingList<Method> methods { get; set; } = new BindingList<Method>();
 
+    public bool Selected { get; set; }
+
+    public Graphics g;
 
     #region Options
     Pen PenBorder = new Pen(Color.Black, 2); //Border
@@ -25,10 +28,14 @@ public class Diagram
     SolidBrush BrushPrimary = new SolidBrush(Color.AliceBlue); //Primary
     SolidBrush BrushBg = new SolidBrush(Color.White); //Background
     string FontFamily = "Arial";
+    int SizeTitle = 16;
+    int SizeOther = 12;
+    int YOffset = 5;
     #endregion
 
-    public Diagram()
+    public Diagram(Graphics g)
     {
+        this.g = g;
         #region Test data
         properties.Add(new Property() { Attribute = "+", Name = "name", Type = "string" });
         properties.Add(new Property() { Attribute = "+", Name = "suername", Type = "string" });
@@ -41,54 +48,78 @@ public class Diagram
         #endregion
     }
 
-    public void Draw(Graphics g)
+    public void Draw2(Graphics g)
     {
-        Rectangle rect = new Rectangle(X, Y, Width, Height);
-        int h = Y;
-        h += DrawTitle(g,rect);
-        rect.Y = h;
-        h += DrawSection(g, rect, properties.Cast<Parametr>().ToList());
-        rect.Y = h;
-        h += DrawSection(g, rect, methods.Cast<Parametr>().ToList());
+        //Rectangle rect = new Rectangle(X, Y, Width, Height);
+        //g.FillRectangle(BrushBg, rect); //debug
+        //int h = Y;
+        //DrawTitle(g,rect); //h += 
+        //rect.Y = h;
+        //h += DrawSection(g, rect, properties.Cast<Parametr>().ToList());
+        //rect.Y = h;
+        //h += DrawSection(g, rect, methods.Cast<Parametr>().ToList());
     }
 
-    private int DrawTitle(Graphics g, Rectangle rect)
+    public void Draw(Graphics g)
     {
-        Rectangle rect2 = rect;
-        Font font = new Font(FontFamily, 16);
+        int a = SizeCalc(Title, SizeTitle);
+        int b = SizeCalc(string.Join("\n", properties.Cast<Parametr>().ToList()), SizeOther) + YOffset;
+        int c = SizeCalc(string.Join("\n", properties.Cast<Parametr>().ToList()), SizeOther) + YOffset;
+        int h = a + b + c; //a,b,c => dont calcul twice
+
+        int bonusSpace = Math.Max((Height - h)/2, 0);
+
+        Rectangle rect = new Rectangle(X, Y, Width, Height);
+        rect.Height = a;
+        DrawTitle(g, rect);
+        rect.Y += a;
+        rect.Height = b + bonusSpace;
+        DrawSection(g, rect, properties.Cast<Parametr>().ToList());
+        rect.Y += b + bonusSpace;
+        rect.Height = c + bonusSpace;
+        DrawSection(g, rect, methods.Cast<Parametr>().ToList());
+    }
+
+    private int TotalSize()
+    {
+        int h = 0;
+        h += SizeCalc(Title, SizeTitle);
+        h += SizeCalc(string.Join("\n", properties.Cast<Parametr>().ToList()), SizeOther);
+        h += SizeCalc(string.Join("\n", properties.Cast<Parametr>().ToList()), SizeOther);
+        return h;
+    }
+    private int SizeCalc(string text, int fontSize)
+    {
+        Font font = new Font(FontFamily, fontSize);
         
-        StringFormat format = new StringFormat();                //diff
+        SizeF textSize = g.MeasureString(text, font);
+        return (int)textSize.Height;
+    }
+    private void DrawTitle(Graphics g, Rectangle rect)
+    {
+        Font font = new Font(FontFamily, SizeTitle);
+        
+        StringFormat format = new StringFormat();             
         format.Alignment = StringAlignment.Center;
         format.LineAlignment = StringAlignment.Center;
 
-        SizeF textSize = g.MeasureString(Title, font);
-        int textHeight = (int)textSize.Height;
-        rect2.Height = textHeight;
-
-        g.FillRectangle(BrushPrimary, rect2);
-        g.DrawRectangle(PenBorder, rect2);
-        g.DrawString(Title, font, BrushFont, rect2, format);
-        
-        return textHeight;
+        g.FillRectangle(BrushPrimary, rect);
+        g.DrawRectangle(PenBorder, rect);
+        g.DrawString(Title, font, BrushFont, rect, format);
     }
-    private int DrawSection(Graphics g, Rectangle rect, List<Parametr> list)
+    private void DrawSection(Graphics g, Rectangle rect, List<Parametr> list)
     {
-        string MergedText = string.Join("\n", list);                        //text
+        string MergedText = string.Join("\n", list);                       
+
+        Font font = new Font(FontFamily, SizeOther);                              
+        
+
+        g.FillRectangle(BrushBg, rect); 
+        g.DrawRectangle(PenBorder, rect);
 
         Rectangle rect2 = rect;
-        Font font = new Font(FontFamily, 12);                               //size
-        int YOffset = 5;
-
-        SizeF textSize = g.MeasureString(MergedText, font);
-        int textHeight = (int)textSize.Height + YOffset;
-        rect2.Height = textHeight;
-
-        g.FillRectangle(BrushBg, rect2); //min(100, text.height)
-        g.DrawRectangle(PenBorder, rect2);
-        rect2.Offset(2, YOffset);                                                   //diff
+        rect2.Offset(2, YOffset);
         g.DrawString(MergedText, font, BrushFont, rect2);
-
-        return textHeight;
     }
 
     //string.Join("\n", list);
