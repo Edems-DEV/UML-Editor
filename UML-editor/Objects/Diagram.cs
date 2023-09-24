@@ -121,34 +121,10 @@ public class Diagram
     {
         int size = 10;
 
-        // Calculate center points for columns (Y)
-        int c1 = Y - (size / 2);
-        int c2 = Y + (farthestPoint.Y / 2) - (size / 2);
-        int c3 = Y + farthestPoint.Y - (size / 2);
+        SelectPoints Poins = new SelectPoints(X, Y, farthestPoint, size);
 
-        // Calculate center points for rows (X)
-        int r1 = X - (size / 2);
-        int r2 = X + (farthestPoint.X / 2) - (size / 2);
-        int r3 = X + farthestPoint.X - (size / 2);
-
-        List<Rectangle> points = new List<Rectangle>();
-        //Top
-        points.Add(new Rectangle(r1, c1, size, size));
-        points.Add(new Rectangle(r1, c2, size, size));
-        points.Add(new Rectangle(r1, c3, size, size));
-
-        //Mid
-        points.Add(new Rectangle(r2, c1, size, size));
-        points.Add(new Rectangle(r2, c3, size, size));
-
-        //Bottom
-        points.Add(new Rectangle(r3, c1, size, size));
-        points.Add(new Rectangle(r3, c2, size, size));
-        points.Add(new Rectangle(r3, c3, size, size));
-
-        foreach (var point in points)
+        foreach (var point in Poins.MakeList())
         {
-            //TODO: center
             g.FillRectangle(BrushFont, point);
         }
 
