@@ -32,6 +32,7 @@
             Attribute = new DataGridViewTextBoxColumn();
             Name = new DataGridViewTextBoxColumn();
             Type = new DataGridViewTextBoxColumn();
+            Parametrs = new DataGridViewTextBoxColumn();
             btn_Ok = new Button();
             btn_Storno = new Button();
             Grid_Props = new DataGridView();
@@ -48,14 +49,17 @@
             Grid_Methods.AllowUserToOrderColumns = true;
             Grid_Methods.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             Grid_Methods.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            Grid_Methods.Columns.AddRange(new DataGridViewColumn[] { Attribute, Name, Type });
+            Grid_Methods.Columns.AddRange(new DataGridViewColumn[] { Attribute, Name, Type, Parametrs });
             Grid_Methods.Location = new Point(13, 219);
             Grid_Methods.Name = "Grid_Methods";
             Grid_Methods.RowHeadersVisible = false;
             Grid_Methods.RowTemplate.Height = 25;
             Grid_Methods.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            Grid_Methods.Size = new Size(240, 177);
+            Grid_Methods.Size = new Size(348, 177);
             Grid_Methods.TabIndex = 0;
+            Grid_Methods.CellClick += Grid_Methods_CellClick;
+            Grid_Methods.CellEndEdit += Grid_Methods_CellEndEdit;
+            Grid_Methods.CellFormatting += Grid_Methods_CellFormatting;
             // 
             // Attribute
             // 
@@ -81,6 +85,12 @@
             Type.Name = "Type";
             Type.ToolTipText = "Return type";
             Type.Width = 75;
+            // 
+            // Parametrs
+            // 
+            Parametrs.DataPropertyName = "Parametrs";
+            Parametrs.HeaderText = "Parametrs";
+            Parametrs.Name = "Parametrs";
             // 
             // btn_Ok
             // 
@@ -114,7 +124,7 @@
             Grid_Props.RowHeadersVisible = false;
             Grid_Props.RowTemplate.Height = 25;
             Grid_Props.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            Grid_Props.Size = new Size(240, 172);
+            Grid_Props.Size = new Size(348, 172);
             Grid_Props.TabIndex = 3;
             Grid_Props.KeyDown += Grid_Props_KeyDown;
             // 
@@ -145,7 +155,7 @@
             textBox_Title.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             textBox_Title.Location = new Point(13, 12);
             textBox_Title.Name = "textBox_Title";
-            textBox_Title.Size = new Size(240, 23);
+            textBox_Title.Size = new Size(348, 23);
             textBox_Title.TabIndex = 4;
             textBox_Title.TextAlign = HorizontalAlignment.Center;
             // 
@@ -154,7 +164,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaption;
-            ClientSize = new Size(265, 437);
+            ClientSize = new Size(373, 437);
             Controls.Add(textBox_Title);
             Controls.Add(Grid_Props);
             Controls.Add(btn_Storno);
@@ -178,11 +188,12 @@
         private Button btn_Storno;
         private DataGridView Grid_Props;
         private TextBox textBox_Title;
-        private DataGridViewTextBoxColumn Attribute;
-        private DataGridViewTextBoxColumn Name;
-        private DataGridViewTextBoxColumn Type;
         private DataGridViewTextBoxColumn V;
         private DataGridViewTextBoxColumn Names;
         private DataGridViewTextBoxColumn Type2;
+        private DataGridViewTextBoxColumn Attribute;
+        private DataGridViewTextBoxColumn Name;
+        private DataGridViewTextBoxColumn Type;
+        private DataGridViewTextBoxColumn Parametrs;
     }
 }

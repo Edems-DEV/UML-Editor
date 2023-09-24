@@ -4,6 +4,9 @@
     <Compile Update="EditWin.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="ListWin.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Main.cs">
       <SubType>Form</SubType>
     </Compile>

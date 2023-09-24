@@ -50,3 +50,4 @@ C:\Users\root\Documents\GitHub\UML-Editor\UML-editor\obj\Debug\net6.0-windows\re
 C:\Users\root\Documents\GitHub\UML-Editor\UML-editor\obj\Debug\net6.0-windows\UML-editor.pdb
 C:\Users\root\Documents\GitHub\UML-Editor\UML-editor\obj\Debug\net6.0-windows\UML-editor.genruntimeconfig.cache
 C:\Users\root\Documents\GitHub\UML-Editor\UML-editor\obj\Debug\net6.0-windows\ref\UML-editor.dll
+C:\Users\root\Documents\GitHub\UML-Editor\UML-editor\obj\Debug\net6.0-windows\UML_editor.ListWin.resources

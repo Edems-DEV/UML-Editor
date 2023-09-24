@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace UML_editor;
 // + getFullName(code: string): bool
 public class Method : Property
 {
-    public List<Parametr> Parametrs { get; set; } = new List<Parametr>();
+    public BindingList<Parametr> Parametrs { get; set; } = new BindingList<Parametr>();
     public override string ToString()
     {
         string a = Attribute + " " + Name + "(" ;

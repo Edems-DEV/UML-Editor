@@ -35,7 +35,7 @@ public class Diagram
 
         methods.Add(new Method() { Attribute = "+", Name = "getFullName", Type = "string"});
         Parametr a = new Parametr() { Name = "code", Type = "string" };
-        List<Parametr> b = new List<Parametr>();
+        BindingList<Parametr> b = new BindingList<Parametr>();
         b.Add(a);
         methods.Add(new Method() { Attribute = "+", Name = "verify", Type = "bool", Parametrs = b });
         #endregion
