@@ -18,7 +18,7 @@ public partial class ListWin : Form
 
         InitializeComponent();
 
-        label_Name.Text = method.Name;
+        label_Name.Text = method.Name + "()";
         Grid_List.DataSource = method.Parametrs;
     }
 

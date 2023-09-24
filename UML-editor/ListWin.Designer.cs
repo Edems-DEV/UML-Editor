@@ -29,11 +29,11 @@ partial class ListWin
     private void InitializeComponent()
     {
         Grid_List = new DataGridView();
+        Name = new DataGridViewTextBoxColumn();
+        Type = new DataGridViewTextBoxColumn();
         label_Name = new Label();
         btn_Ok = new Button();
         btn_Cancel = new Button();
-        Name = new DataGridViewTextBoxColumn();
-        Type = new DataGridViewTextBoxColumn();
         ((System.ComponentModel.ISupportInitialize)Grid_List).BeginInit();
         SuspendLayout();
         // 
@@ -50,6 +50,19 @@ partial class ListWin
         Grid_List.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         Grid_List.Size = new Size(233, 166);
         Grid_List.TabIndex = 0;
+        // 
+        // Name
+        // 
+        Name.DataPropertyName = "Name";
+        Name.HeaderText = "Name";
+        Name.Name = "Name";
+        Name.Width = 130;
+        // 
+        // Type
+        // 
+        Type.DataPropertyName = "Type";
+        Type.HeaderText = "Type";
+        Type.Name = "Type";
         // 
         // label_Name
         // 
@@ -82,19 +95,6 @@ partial class ListWin
         btn_Cancel.UseVisualStyleBackColor = true;
         btn_Cancel.Click += btn_Cancel_Click;
         // 
-        // Name
-        // 
-        Name.DataPropertyName = "Name";
-        Name.HeaderText = "Name";
-        Name.Name = "Name";
-        Name.Width = 130;
-        // 
-        // Type
-        // 
-        Type.DataPropertyName = "Type";
-        Type.HeaderText = "Type";
-        Type.Name = "Type";
-        // 
         // ListWin
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
@@ -105,8 +105,8 @@ partial class ListWin
         Controls.Add(btn_Ok);
         Controls.Add(label_Name);
         Controls.Add(Grid_List);
-        Name = "ListWin";
-        Text = "ListWin";
+        //Name = "ListWin";
+        Text = "UML Editor";
         ((System.ComponentModel.ISupportInitialize)Grid_List).EndInit();
         ResumeLayout(false);
         PerformLayout();
