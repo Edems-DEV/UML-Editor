@@ -14,8 +14,8 @@ public class Diagram
     public int Height { get; set; }
 
     public string Title { get; set; } = ""; //diagram title
-    public List<Property> properties = new List<Property>();
-    public List<Method> methods = new List<Method>();
+    public List<Property> properties { get; set; }  = new List<Property>();
+    public List<Method> methods { get; set; } = new List<Method>();
 
 
     #region Options
