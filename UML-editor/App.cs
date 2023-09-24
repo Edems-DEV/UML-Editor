@@ -13,7 +13,7 @@ internal class App
     public List<Diagram> Diagrams = new List<Diagram>();
     public Diagram ActiveDiagram { get; private set; } = null;
     public int Width { get; set; }
-    public int Height { get; set; }
+    public int Height { get; set; } //only for extra space (wont be smaller than text needs)
     public Graphics g { get; set; }
 
 
@@ -21,11 +21,29 @@ internal class App
     {
         this.Width = width;
         this.Height = height;
-        this.g = g;
+        this.g = g; //TODO: temp (re-think)
         
         Diagrams.Add(new Diagram(g) { Title = "Diagram1", X = 10, Y = 10, Width = 300, Height = 200 });
 
         Diagrams.Add(new Diagram(g) { Title = "Diagram2", X = 400, Y = 10, Width = 300, Height = 300 }); //TODO: Height rensposible, no static
+    }
+    public void Draw(Graphics g)
+    {
+        foreach (var diagram in Diagrams)
+        {
+            diagram.Draw(g);
+        }
+    }
+    public void Add(Graphics g) //AddNew <= Btn
+    {
+        int diagramWidth = 300; // Set the width of the Diagram
+        int diagramHeight = 200; // Set the height of the Diagram
+
+        int centerX = (Width - diagramWidth) / 2;
+        int centerY = (Height - diagramHeight) / 2;
+
+        Diagrams.Add(new Diagram(g) { Title = "New Diagram", X = centerX, Y = centerY, Width = diagramWidth, Height = diagramHeight });
+        Draw(g);
     }
 
     public void Edit(Point location)
@@ -72,15 +90,8 @@ internal class App
         return ActiveDiagram;
     }
 
-
-
-    public void Draw(Graphics g)
-    {
-        foreach (var diagram in Diagrams)
-        {
-            diagram.Draw(g);
-        }
-    }
+    #region Save/Load
+    //TODO: move to FileService
     public void Save() 
     {
         string filePath = "C:/Users/root/Desktop/M/diagrams.json";
@@ -110,16 +121,5 @@ internal class App
             }
         }
     }
-
-    public void Add(Graphics g) //AddNew <= Btn
-    {
-        int diagramWidth = 300; // Set the width of the Diagram
-        int diagramHeight = 200; // Set the height of the Diagram
-        
-        int centerX = (Width - diagramWidth) / 2;
-        int centerY = (Height - diagramHeight) / 2;
-
-        Diagrams.Add(new Diagram(g) { Title = "New Diagram", X = centerX, Y = centerY, Width = diagramWidth, Height = diagramHeight });
-        Draw(g);
-    }
+    #endregion
 }

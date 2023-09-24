@@ -50,16 +50,24 @@ public class Diagram
 
     public void Draw(Graphics g)
     {
-        int a = SizeCalc(Title, SizeTitle);
-        int b = SizeCalc(string.Join("\n", properties.Cast<Parametr>().ToList()), SizeOther) + YOffset;
-        int c = SizeCalc(string.Join("\n", properties.Cast<Parametr>().ToList()), SizeOther) + YOffset;
+        SizeF x1 = SizeCalc(Title, SizeTitle);
+        SizeF x2 = SizeCalc(string.Join("\n", properties.Cast<Parametr>().ToList()), SizeOther);
+        SizeF x3 = SizeCalc(string.Join("\n", properties.Cast<Parametr>().ToList()), SizeOther);
+
+        int a = (int)x1.Height;
+        int b = (int)x2.Height + YOffset;
+        int c = (int)x3.Height + +YOffset;
+
         int h = a + b + c; //a,b,c => dont calcul twice
 
         int bonusSpace = Math.Max((Height - h)/2, 0);
         b = b + bonusSpace;
         c = c + bonusSpace;
 
-        Rectangle rect = new Rectangle(X, Y, Width, Height);
+        List<float> xxx = new List<float>() { x1.Width, x2.Width, x3.Width };
+        int minWidth = Math.Max((int)xxx.Max(), Width);
+
+        Rectangle rect = new Rectangle(X, Y, minWidth, Height);
         rect.Height = a;
         DrawTitle(g, rect);
         rect.Y += a;
@@ -69,12 +77,12 @@ public class Diagram
         rect.Height = c;
         DrawSection(g, rect, methods.Cast<Parametr>().ToList());
     }
-    private int SizeCalc(string text, int fontSize)
+    private SizeF SizeCalc(string text, int fontSize)
     {
         Font font = new Font(FontFamily, fontSize);
         
         SizeF textSize = g.MeasureString(text, font);
-        return (int)textSize.Height;
+        return textSize;
     }
     private void DrawTitle(Graphics g, Rectangle rect)
     {
