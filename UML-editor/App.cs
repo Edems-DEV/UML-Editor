@@ -29,6 +29,7 @@ internal class App
     }
     public void Draw(Graphics g)
     {
+        //still need new g, because of the refresh
         foreach (var diagram in Diagrams)
         {
             diagram.Draw(g);
@@ -41,6 +42,7 @@ internal class App
             diagram.Draw(g);
         }
     }
+    #region Btn
     public void Add(Graphics g) //AddNew <= Btn
     {
         int diagramWidth = 300; // Set the width of the Diagram
@@ -70,6 +72,7 @@ internal class App
 
         form.ShowDialog();
     }
+    #endregion
 
     public int SelectDiagram(Point loc)
     {
@@ -85,15 +88,16 @@ internal class App
 
             if (temp.Contains(loc)) //large
             {
-                //foreach (var point in diagram.points.MakeList())
-                //{
-                //    if (point.Contains(loc))
-                //    {
-                //        pointIndex = x;
-                //        break;
-                //    }
-                //    x++;
-                //}
+                List<Rectangle> points = diagram.points.MakeList();
+                foreach (var point in points)
+                {
+                    if (point.Contains(loc))
+                    {
+                        pointIndex = points.IndexOf(point);
+                        break;
+                    }
+                    x++;
+                }
 
                 temp = new Rectangle(diagram.X, diagram.Y, diagram.Width, diagram.Height); //remove Poit size
                 if (temp.Contains(loc)) //can be outside (remove point padding)
@@ -159,7 +163,7 @@ internal class App
 
                 Diagrams = JsonSerializer.Deserialize<List<Diagram>>(json);
 
-                MessageBox.Show(string.Join(", ", Diagrams.Select(diagram => diagram.Title)));
+                //MessageBox.Show(string.Join(", ", Diagrams.Select(diagram => diagram.Title)));
                 Draw(g); //refresh
                 
             }

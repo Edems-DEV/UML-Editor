@@ -93,6 +93,7 @@ public class Diagram
         SizeF textSize = g.MeasureString(text, font);
         return textSize;
     }
+    #region Draw
     private void DrawTitle(Graphics g, Rectangle rect)
     {
         Font font = new Font(FontFamily, SizeTitle);
@@ -131,6 +132,7 @@ public class Diagram
 
         return points;
     }
+    #endregion
 
     //string.Join("\n", list);
     //private int DrawUniversal(Graphics g, Rectangle rect, string text, int fontSize, Brush Bg, Point Offset = default)
