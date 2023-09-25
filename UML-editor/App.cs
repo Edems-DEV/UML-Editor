@@ -34,6 +34,13 @@ internal class App
             diagram.Draw(g);
         }
     }
+    public void Draw()
+    {
+        foreach (var diagram in Diagrams)
+        {
+            diagram.Draw(g);
+        }
+    }
     public void Add(Graphics g) //AddNew <= Btn
     {
         int diagramWidth = 300; // Set the width of the Diagram
@@ -152,7 +159,9 @@ internal class App
 
                 Diagrams = JsonSerializer.Deserialize<List<Diagram>>(json);
 
+                MessageBox.Show(string.Join(", ", Diagrams.Select(diagram => diagram.Title)));
                 Draw(g); //refresh
+                
             }
             catch (Exception ex)
             {

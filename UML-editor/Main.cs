@@ -107,6 +107,11 @@ public partial class Main : Form
     private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
     {
         PointIndex = app.SelectDiagram(e.Location);
+
+        //for deselect
+        app.Draw();
+        pictureBox1.Refresh();
+        
         if (app.ActiveDiagram == null)
             return;
 
