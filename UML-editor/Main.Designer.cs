@@ -32,6 +32,8 @@
             btn_Add = new Button();
             btn_Load = new Button();
             btn_Save = new Button();
+            saveFileDialog1 = new SaveFileDialog();
+            openFileDialog1 = new OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -85,6 +87,10 @@
             btn_Save.UseVisualStyleBackColor = true;
             btn_Save.Click += btn_Save_Click;
             // 
+            // openFileDialog1
+            // 
+            openFileDialog1.FileName = "openFileDialog1";
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -109,5 +115,7 @@
         private Button btn_Add;
         private Button btn_Load;
         private Button btn_Save;
+        private SaveFileDialog saveFileDialog1;
+        private OpenFileDialog openFileDialog1;
     }
 }

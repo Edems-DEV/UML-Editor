@@ -133,10 +133,8 @@ internal class App
 
     #region Save/Load
     //TODO: move to FileService
-    public void Save() 
+    public void Save(string filePath) 
     {
-        string filePath = "C:/Users/Dolanskyadam/Desktop/x";
-
         string json = JsonSerializer.Serialize(Diagrams, new JsonSerializerOptions
         {
             WriteIndented = true

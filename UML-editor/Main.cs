@@ -37,13 +37,28 @@ public partial class Main : Form
 
     private void btn_Save_Click(object sender, EventArgs e)
     {
-        app.Save();
+        SaveFileDialog FDialog = new SaveFileDialog();
+        FDialog.Filter = "Json files (*.json)|*.json";
+
+        if (FDialog.ShowDialog() == DialogResult.OK)
+        {
+            
+            app.Save(FDialog.FileName);
+        }
+        
     }
 
     private void btn_Load_Click(object sender, EventArgs e)
     {
-        app.Load(pictureBox1.CreateGraphics(), "C:/Users/root/Desktop/M/diagrams.json");
-        this.pictureBox1.Refresh();
+        OpenFileDialog FDialog = new OpenFileDialog();
+        FDialog.Filter = "Json files (*.json)|*.json";
+
+        if (FDialog.ShowDialog() == DialogResult.OK)
+        {
+            app.Load(pictureBox1.CreateGraphics(), FDialog.FileName);
+            this.pictureBox1.Refresh();
+        }
+
     }
     #endregion
 
@@ -133,7 +148,7 @@ public partial class Main : Form
             app.RemoveActiveDiagram();
             pictureBox1.Refresh(); //just blinks
         }
-        else if (e.Control && e.KeyCode == Keys.N 
+        else if (e.Control && e.KeyCode == Keys.N
                            || e.KeyCode == Keys.Insert)
         {
             app.Add(pictureBox1.CreateGraphics());
