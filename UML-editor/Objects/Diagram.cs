@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ namespace UML_editor;
 
 public class Diagram
 {
+    //public Rectangle rect; // => replace X,Y,Width,Height
     public int X { get; set; }
     public int Y { get; set; }
     public int Width { get; set; }
@@ -19,9 +21,12 @@ public class Diagram
     public BindingList<Method> methods { get; set; } = new BindingList<Method>();
 
     public bool Selected { get; set; } = false;
-    public SelectPoints points { get; set; }
+    //public SelectPoints points { get; set; }
+    public List<Rectangle> GrapPoints { get; set; }
 
     public Graphics g;
+    int hh = 0;
+    int ww = 0;
 
     #region Options
     Pen PenBorder = new Pen(Color.Black, 2); //Border
@@ -68,9 +73,11 @@ public class Diagram
         c = c + bonusSpace;
 
         h = a + b + c;
+        hh = h;
 
         List<float> xxx = new List<float>() { x1.Width, x2.Width, x3.Width };
         int minWidth = Math.Max((int)xxx.Max(), Width);
+        ww = minWidth;
 
         //Draw
         Rectangle rect = new Rectangle(X, Y, minWidth, Height);
@@ -119,17 +126,52 @@ public class Diagram
         rect2.Offset(2, YOffset);
         g.DrawString(MergedText, font, BrushFont, rect2);
     }
-    private SelectPoints DrawSelection(Graphics g, Point farthestPoint)
+    private void DrawSelection(Graphics g, Point farthestPoint)
     {
         int size = 10;
 
-        points = new SelectPoints(X, Y, farthestPoint, size);
+        //points = new SelectPoints(X, Y, farthestPoint, size);
+        CalcSelection(size);
 
-        foreach (var point in points.MakeList())
+        foreach (var point in GrapPoints)
         {
             g.FillRectangle(BrushFont, point);
         }
 
+        //return points;
+    }
+
+    public List<Rectangle> CalcSelection(int size)
+    {
+        Point farthestPoint = new Point(hh, ww);
+        
+        // Calculate center points for columns (Y)
+        int c1 = Y - (size / 2);
+        int c2 = Y + (farthestPoint.Y / 2) - (size / 2);
+        int c3 = Y + farthestPoint.Y - (size / 2);
+
+        // Calculate center points for rows (X)
+        int r1 = X - (size / 2);
+        int r2 = X + (farthestPoint.X / 2) - (size / 2);
+        int r3 = X + farthestPoint.X - (size / 2);
+
+        List<Rectangle> points = new List<Rectangle>();
+
+        //Column 1
+        points.Add(new Rectangle(r1, c1, size, size));
+        points.Add(new Rectangle(r2, c1, size, size));
+        points.Add(new Rectangle(r3, c1, size, size));
+
+        //Column 2
+        points.Add(new Rectangle(r1, c2, size, size));
+        points.Add(new Rectangle(r3, c2, size, size));
+
+        //Column 3
+        points.Add(new Rectangle(r1, c3, size, size));
+        points.Add(new Rectangle(r2, c3, size, size));
+        points.Add(new Rectangle(r3, c3, size, size));
+
+        GrapPoints = points;
         return points;
     }
     #endregion

@@ -88,16 +88,17 @@ internal class App
 
             if (temp.Contains(loc)) //large
             {
-                List<Rectangle> points = diagram.points.MakeList();
-                foreach (var point in points)
-                {
-                    if (point.Contains(loc))
-                    {
-                        pointIndex = points.IndexOf(point);
-                        break;
-                    }
-                    x++;
-                }
+                //List<Rectangle> points = diagram.CalcSelection(10);
+                //foreach (var point in points)
+                //{
+                //    if (point.Contains(loc))
+                //    {
+                //        pointIndex = points.IndexOf(point);
+                //        //MessageBox.Show("Index:" + pointIndex);
+                //        break;
+                //    }
+                //    x++;
+                //}
 
                 temp = new Rectangle(diagram.X, diagram.Y, diagram.Width, diagram.Height); //remove Poit size
                 if (temp.Contains(loc)) //can be outside (remove point padding)
