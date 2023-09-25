@@ -13,6 +13,7 @@ namespace UML_editor;
 public partial class Main : Form
 {
     private App app;
+    private int PointIndex = -1;
 
     public Main()
     {
@@ -27,6 +28,7 @@ public partial class Main : Form
     {
         app.Draw(e.Graphics);
     }
+
     #region Btn
     private void btn_Add_Click(object sender, EventArgs e)
     {
@@ -84,19 +86,26 @@ public partial class Main : Form
         app.Edit(e.Location);
     }
 
+    #region Mouse handler
     private bool isDragging = false;
     private Point offset;
     private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
     {
-        if (false)
-        {
+        PointIndex = app.SelectDiagram(e.Location);
+        if (app.ActiveDiagram == null)
+            return;
 
+        if (false) //change size
+        {
+            //(PointIndex != -1) //no point selected
+            //change size
         }
-        else if (app.SelectDiagram(e.Location) != null)
+        else //move diagram
         {
             isDragging = true;
             offset = new Point(e.X - app.ActiveDiagram.X, e.Y - app.ActiveDiagram.Y);
         }
+
     }
     private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
     {
@@ -107,19 +116,27 @@ public partial class Main : Form
 
             app.Draw(pictureBox1.CreateGraphics());
 
-            pictureBox1.Invalidate(); // Redraw the PictureBox
+            //pictureBox1.Invalidate(); // Redraw the PictureBox
+            pictureBox1.Refresh(); // Redraw the PictureBox
         }
     }
     private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
     {
         isDragging = false;
     }
+    #endregion
 
     private void Main_KeyDown(object sender, KeyEventArgs e)
     {
-        MessageBox.Show("KeyDown"); //WTF, broken idk why :)
-
         if (e.KeyCode == Keys.Delete)
+        {
             app.RemoveActiveDiagram();
+            pictureBox1.Refresh(); //just blinks
+        }
+        else if (e.Control && e.KeyCode == Keys.N 
+                           || e.KeyCode == Keys.Insert)
+        {
+            app.Add(pictureBox1.CreateGraphics());
+        }
     }
 }

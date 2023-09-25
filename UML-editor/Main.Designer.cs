@@ -95,6 +95,7 @@
             Controls.Add(btn_Load);
             Controls.Add(btn_Add);
             Controls.Add(pictureBox1);
+            KeyPreview = true;
             Name = "Main";
             Text = "UML Editor";
             KeyDown += Main_KeyDown;

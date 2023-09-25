@@ -64,27 +64,36 @@ internal class App
         form.ShowDialog();
     }
 
-    public Diagram SelectDiagram(Point loc)
+    public int SelectDiagram(Point loc)
     {
         Diagram newActiveDiagram = null;
+        int pointIndex = -1;
+        int x = 0;
+
+        int GrapPoinSize = 5;
 
         foreach (var diagram in Diagrams)
         {
-            // Calculate the center of the diagram
-            int centerX = diagram.X + diagram.Width / 2;
-            int centerY = diagram.Y + diagram.Height / 2;
+            Rectangle temp = new Rectangle(diagram.X, diagram.Y, diagram.Width + GrapPoinSize, diagram.Height + GrapPoinSize);
 
-            // Calculate half of the diagram's width and height
-            int halfWidth = diagram.Width / 2;
-            int halfHeight = diagram.Height / 2;
-
-            // Check if the point is within the diagram's bounding box
-            if (Math.Abs(loc.X - centerX) <= halfWidth && Math.Abs(loc.Y - centerY) <= halfHeight)
+            if (temp.Contains(loc)) //large
             {
-                newActiveDiagram = diagram;
-                break; // Exit the loop as soon as one diagram is found within the bounding box
+                //foreach (var point in diagram.points.MakeList())
+                //{
+                //    if (point.Contains(loc))
+                //    {
+                //        pointIndex = x;
+                //        break;
+                //    }
+                //    x++;
+                //}
+
+                temp = new Rectangle(diagram.X, diagram.Y, diagram.Width, diagram.Height); //remove Poit size
+                if (temp.Contains(loc)) //can be outside (remove point padding)
+                    newActiveDiagram = diagram;
             }
         }
+
 
         //deselect old
         if (ActiveDiagram != null)
@@ -95,25 +104,38 @@ internal class App
         if (ActiveDiagram != null)
             ActiveDiagram.Selected = true;
 
-        return ActiveDiagram;
+        return pointIndex;
     }
-    public void SelectPoint(Point loc)
+    public void SelectPoint(int index, Point Loc) //TODO:
     {
-        //foreach (var diagram in Diagrams)
-        //{
-        //    foreach (var point in diagram.points.MakeList())
-        //    {
-        //        point.
-        //    }
-            
-        //}
+        Point DragPoint = new Point(0, 0); //TODO: replace with real colusion point
+        int Xdiff = DragPoint.X - Loc.X;
+        int YDiff = DragPoint.Y - Loc.Y;
+
+        if (index == 1){
+
+        }else if(index == 2){
+
+        }else if(index == 3){
+
+        }else if (index == 4){
+
+        }else if (index == 5){
+
+        }else if (index == 6){
+
+        }else if (index == 7){
+
+        }else if (index == 8){
+
+        }
     }
 
     #region Save/Load
     //TODO: move to FileService
     public void Save() 
     {
-        string filePath = "C:/Users/root/Desktop/M/diagrams.json";
+        string filePath = "C:/Users/Dolanskyadam/Desktop/x";
 
         string json = JsonSerializer.Serialize(Diagrams, new JsonSerializerOptions
         {
@@ -144,9 +166,7 @@ internal class App
 
     public void RemoveActiveDiagram()
     {
-        MessageBox.Show("Delete key is pressed!");
         if (ActiveDiagram != null)
             Diagrams.RemoveAll(diagram => diagram.Selected);
-        Draw(g);
     }
 }
