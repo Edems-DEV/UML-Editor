@@ -94,6 +94,7 @@ public partial class Main : Form
     #region Mouse handler
     private bool isDragging = false;
     private Point offset;
+    private Point start;
 
     private int PointIndex = -1;
     private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
@@ -107,32 +108,33 @@ public partial class Main : Form
         if (app.ActiveDiagram == null)
             return;
 
-        if (false) //change size
-        {
-            //(PointIndex != -1) //no point selected
-            //change size
-        }
-        else //move diagram
-        {
-            isDragging = true;
-            offset = new Point(e.X - app.ActiveDiagram.X, e.Y - app.ActiveDiagram.Y);
-        }
+        isDragging = true;
+        offset = new Point(e.X - app.ActiveDiagram.X, e.Y - app.ActiveDiagram.Y);
     }
     private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
     {
         if (isDragging)
         {
-            app.ActiveDiagram.X = e.X - offset.X;
-            app.ActiveDiagram.Y = e.Y - offset.Y;
+            if (app.pointIndex != -1) //change size
+            {
+                app.SelectPoint(e.Location, offset);
+            }
+            else
+            {
+                app.ActiveDiagram.X = e.X - offset.X;
+                app.ActiveDiagram.Y = e.Y - offset.Y;
+            }
 
             app.Draw(pictureBox1.CreateGraphics());
 
             //pictureBox1.Invalidate(); // Redraw the PictureBox
-            pictureBox1.Refresh(); // Redraw the PictureBox
+            pictureBox1.Refresh();
         }
     }
     private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
     {
+        //reset
+        app.pointIndex = -1;
         isDragging = false;
     }
     #endregion

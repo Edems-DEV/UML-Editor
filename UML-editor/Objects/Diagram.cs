@@ -21,12 +21,11 @@ public class Diagram
     public BindingList<Method> methods { get; set; } = new BindingList<Method>();
 
     public bool Selected { get; set; } = false;
-    //public SelectPoints points { get; set; }
     public List<Rectangle> GrapPoints { get; set; }
 
     public Graphics g;
-    int hh = 0;
-    int ww = 0;
+    //int hh = 0;
+    //int ww = 0;
 
     #region Options
     Pen PenBorder = new Pen(Color.Black, 2); //Border
@@ -77,11 +76,11 @@ public class Diagram
         c = c + bonusSpace;
 
         h = a + b + c;
-        hh = h;
+        Height = h;
 
         List<float> xxx = new List<float>() { x1.Width, x2.Width, x3.Width };
         int minWidth = Math.Max((int)xxx.Max(), Width);
-        ww = minWidth;
+        Width = minWidth;
 
         //Draw
         Rectangle rect = new Rectangle(X, Y, minWidth, Height);
@@ -132,7 +131,7 @@ public class Diagram
     }
     private void DrawSelection(Graphics g, Point farthestPoint)
     {
-        int size = 20; //10
+        int size = 20; //can be made larger in App.SelectDiagram() to keep good look
 
         //points = new SelectPoints(X, Y, farthestPoint, size);
         CalcSelection(size);
@@ -147,7 +146,7 @@ public class Diagram
 
     public List<Rectangle> CalcSelection(int size)
     {
-        Point farthestPoint = new Point(ww, hh);
+        Point farthestPoint = new Point(Width, Height);
 
         // Calculate center points for columns (Y)
         int c1 = Y - (size / 2);

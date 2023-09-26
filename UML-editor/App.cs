@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -12,7 +13,8 @@ internal class App
 {
     public List<Diagram> Diagrams = new List<Diagram>();
     public Diagram ActiveDiagram { get; private set; } = null;
-    int pointIndex = -1;
+    Rectangle GrapPoint = new Rectangle(); //vypočítám z celého main ractaglu neni třeba //TODO: remove
+    public int pointIndex { get; set; } = -1;
     
     public int Width { get; set; } //for centering new diagram
     public int Height { get; set; } //for centering new diagram
@@ -84,7 +86,7 @@ internal class App
     {
         Diagram newActiveDiagram = null;
 
-        int GrapPoinSize = 5;
+        int GrapPoinSize = 30;
 
         foreach (var diagram in Diagrams)
         {
@@ -98,7 +100,8 @@ internal class App
                     if (point.Contains(loc))
                     {
                         pointIndex = points.IndexOf(point);
-                        MessageBox.Show("Index:" + pointIndex); //debug
+                        GrapPoint = point; 
+                        //MessageBox.Show("Index:" + pointIndex); //debug
                         break;
                     }
                 }
@@ -121,29 +124,103 @@ internal class App
 
         return pointIndex;
     }
-    public void SelectPoint(int index, Point Loc) //TODO:
+
+    static Point CalculateCenter(Rectangle rect) //temp remove
     {
-        Point DragPoint = new Point(0, 0); //TODO: replace with real colusion point
-        int Xdiff = DragPoint.X - Loc.X;
-        int YDiff = DragPoint.Y - Loc.Y;
+        int centerX = rect.X + rect.Width / 2;
+        int centerY = rect.Y + rect.Height / 2;
 
-        if (index == 1){
+        return new Point(centerX, centerY);
+    }
 
-        }else if(index == 2){
+    public void SelectPoint(Point Loc, Point Offset) //TODO:
+    {
+        //temp
+        int dragHandle = pointIndex;
 
-        }else if(index == 3){
+        //Point dragPoint = Start; //nelze, chci diff od aktualni pozice
+        Point dragPoint = CalculateCenter(GrapPoint); //replace with calculated point
 
-        }else if (index == 4){
+        Rectangle oldRect = new Rectangle(ActiveDiagram.X, ActiveDiagram.Y, ActiveDiagram.Width, ActiveDiagram.Height);
+        g.DrawRectangle(Pens.Red, oldRect);
 
-        }else if (index == 5){
+        //int diff_X = Loc.X - dragPoint.X;
+        //int diff_Y = Loc.Y - dragPoint.Y;
 
-        }else if (index == 6){
+        int diff_X = dragPoint.X - Loc.X;
+        int diff_Y = dragPoint.Y - Loc.Y;
 
-        }else if (index == 7){
-
-        }else if (index == 8){
-
+        switch (pointIndex)
+        {
+            case 1: // Top
+                oldRect.Y -= diff_Y;
+                oldRect.Height += diff_Y;
+                app.ActiveDiagram.X = Loc.X - Offset.X;
+                break;
+            case 6: // Down
+                oldRect.Height -= diff_Y;
+                break;
+            case 3: // Left
+                oldRect.X -= diff_X;
+                oldRect.Width += diff_X;
+                break;
+            case 4: // Right
+                oldRect.Width -= diff_X;
+                break;
+            case 0: // Scale: Top Left
+                oldRect.X -= diff_X;
+                oldRect.Width += diff_X;
+                oldRect.Y -= diff_Y;
+                oldRect.Height += diff_Y;
+                break;
+            case 7: // Scale: Bottom Right
+                oldRect.Width -= diff_X;
+                oldRect.Height -= diff_Y;
+                break;
+            case 2: // Scale: Top Right
+                oldRect.Width += diff_X;
+                oldRect.Y -= diff_Y;
+                oldRect.Height += diff_Y;
+                break;
+            case 5: // Scale: Bottom Left
+                oldRect.X -= diff_X;
+                oldRect.Width += diff_X;
+                oldRect.Height -= diff_Y;
+                break;
         }
+
+        //switch (pointIndex)
+        //{
+        //    case 1: // Top
+        //        oldRect.Y += diff_Y;
+        //        oldRect.Height += diff_Y;
+        //        break;
+        //    case 6: // Down
+        //        oldRect.Y += ActiveDiagram.Y + diff_Y;
+        //        oldRect.Height += diff_Y;
+        //        break;
+        //    case 3: // Left
+        //        oldRect.X -= diff_X;
+        //        oldRect.Width -= diff_X;
+        //        break;
+        //    case 4: // Right
+        //        oldRect.X += diff_X;
+        //        oldRect.Width += diff_X;
+        //        break;
+        //    case 0: // Scale: Top Left
+        //        break;
+        //    case 7: // Scale: Bottom Right
+        //        break;
+        //    case 2: // Scale: Top Right
+        //        break;
+        //    case 5: // Scale: Bottom Left
+        //        break;
+        //}
+
+        ActiveDiagram.X = oldRect.X;
+        ActiveDiagram.Y = oldRect.Y;
+        ActiveDiagram.Width = oldRect.Width;
+        ActiveDiagram.Height = oldRect.Height;
     }
 
     #region Save/Load
