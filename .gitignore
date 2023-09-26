@@ -351,3 +351,12 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+UML-editor/obj/Debug/net6.0-windows/UML-editor.pdb
+*.pdb
+*.dll
+*.cache
+*.cache
+*.cache
+UML-editor/obj/Debug/net6.0-windows/refint/UML-editor.dll
+*.v2
+*.vsidx

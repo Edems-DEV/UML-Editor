@@ -22,10 +22,13 @@ internal class App
         this.Width = width;
         this.Height = height;
         this.g = g; //TODO: temp (re-think)
-        
-        Diagrams.Add(new Diagram(g) { Title = "Diagram1", X = 10, Y = 10, Width = 300, Height = 200 });
 
-        Diagrams.Add(new Diagram(g) { Title = "Diagram2", X = 400, Y = 10, Width = 300, Height = 300 }); //TODO: Height rensposible, no static
+        Diagram newDiagram1 = new Diagram() { Title = "Diagram1", X = 10, Y = 10, Width = 300, Height = 200 };
+        Diagram newDiagram2 = new Diagram() { Title = "Diagram2", X = 400, Y = 10, Width = 300, Height = 300 };
+        Diagrams.Add(newDiagram1);
+        Diagrams.Add(newDiagram2);
+        newDiagram1.AddG(g);
+        newDiagram2.AddG(g);
     }
     public void Draw(Graphics g)
     {
@@ -51,7 +54,9 @@ internal class App
         int centerX = (Width - diagramWidth) / 2;
         int centerY = (Height - diagramHeight) / 2;
 
-        Diagrams.Add(new Diagram(g) { Title = "New Diagram", X = centerX, Y = centerY, Width = diagramWidth, Height = diagramHeight });
+        Diagram newDiagram = new Diagram() { Title = "New Diagram", X = centerX, Y = centerY, Width = diagramWidth, Height = diagramHeight };
+        Diagrams.Add(newDiagram);
+        newDiagram.AddG(g);
         Draw(g);
     }
 
@@ -166,7 +171,7 @@ internal class App
 
                 //MessageBox.Show(string.Join(", ", Diagrams.Select(diagram => diagram.Title)));
                 Draw(g); //refresh
-                
+
             }
             catch (Exception ex)
             {

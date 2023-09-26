@@ -13,7 +13,6 @@ namespace UML_editor;
 public partial class Main : Form
 {
     private App app;
-    private int PointIndex = -1;
 
     public Main()
     {
@@ -104,6 +103,8 @@ public partial class Main : Form
     #region Mouse handler
     private bool isDragging = false;
     private Point offset;
+
+    private int PointIndex = -1;
     private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
     {
         PointIndex = app.SelectDiagram(e.Location);

@@ -39,9 +39,9 @@ public class Diagram
     int YOffset = 5;
     #endregion
 
-    public Diagram(Graphics g)
+    public Diagram()
     {
-        this.g = g;
+        //this.g = g; //nemuzu potom loadovat JOSN
         #region Test data
         properties.Add(new Property() { Attribute = "+", Name = "name", Type = "string" });
         properties.Add(new Property() { Attribute = "+", Name = "suername", Type = "string" });
@@ -53,13 +53,17 @@ public class Diagram
         methods.Add(new Method() { Attribute = "+", Name = "verify", Type = "bool", Parametrs = b });
         #endregion
     }
+    public void AddG(Graphics gg)
+    {
+        this.g = gg;
+    }
 
     public void Draw(Graphics g)
     {
         //Calc size
-        SizeF x1 = SizeCalc(Title, SizeTitle);
-        SizeF x2 = SizeCalc(string.Join("\n", properties.Cast<Parametr>().ToList()), SizeOther);
-        SizeF x3 = SizeCalc(string.Join("\n", properties.Cast<Parametr>().ToList()), SizeOther);
+        SizeF x1 = SizeCalc(g, Title, SizeTitle);
+        SizeF x2 = SizeCalc(g, string.Join("\n", properties.Cast<Parametr>().ToList()), SizeOther);
+        SizeF x3 = SizeCalc(g, string.Join("\n", properties.Cast<Parametr>().ToList()), SizeOther);
 
         int a = (int)x1.Height;
         int b = (int)x2.Height + YOffset;
@@ -93,7 +97,7 @@ public class Diagram
         if (Selected)
             DrawSelection(g, new Point(minWidth, h));
     }
-    private SizeF SizeCalc(string text, int fontSize)
+    private SizeF SizeCalc(Graphics g, string text, int fontSize)
     {
         Font font = new Font(FontFamily, fontSize);
         
