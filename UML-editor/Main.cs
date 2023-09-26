@@ -36,15 +36,7 @@ public partial class Main : Form
 
     private void btn_Save_Click(object sender, EventArgs e)
     {
-        SaveFileDialog FDialog = new SaveFileDialog();
-        FDialog.Filter = "Json files (*.json)|*.json";
-
-        if (FDialog.ShowDialog() == DialogResult.OK)
-        {
-            
-            app.Save(FDialog.FileName);
-        }
-        
+        Save();
     }
 
     private void btn_Load_Click(object sender, EventArgs e)
@@ -158,6 +150,21 @@ public partial class Main : Form
                            || e.KeyCode == Keys.Insert)
         {
             app.Add(pictureBox1.CreateGraphics());
+        }
+        else if (e.Control && e.KeyCode == Keys.S)
+        {
+            Save();
+        }
+    }
+    private void Save()
+    {
+        SaveFileDialog FDialog = new SaveFileDialog();
+        FDialog.Filter = "Json files (*.json)|*.json";
+
+        if (FDialog.ShowDialog() == DialogResult.OK)
+        {
+
+            app.Save(FDialog.FileName);
         }
     }
 }
