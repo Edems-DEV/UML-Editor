@@ -14,7 +14,7 @@ public class Diagram
     public int X { get; set; }
     public int Y { get; set; }
     public int Width { get; set; }
-    public int Height { get; set; }
+    public int Height { get; set; } //only for extra space (wont be smaller than text needs)
 
     public string Title { get; set; } = ""; //diagram title
     public BindingList<Property> properties { get; set; }  = new BindingList<Property>();
@@ -147,8 +147,9 @@ public class Diagram
 
     public List<Rectangle> CalcSelection(int size)
     {
-        Point farthestPoint = new Point(hh, ww);
+        Point farthestPoint = new Point(ww, hh);
         
+
         // Calculate center points for columns (Y)
         int c1 = Y - (size / 2);
         int c2 = Y + (farthestPoint.Y / 2) - (size / 2);
@@ -180,6 +181,7 @@ public class Diagram
     }
     #endregion
 
+    #region ideas
     //string.Join("\n", list);
     //private int DrawUniversal(Graphics g, Rectangle rect, string text, int fontSize, Brush Bg, Point Offset = default)
     //{
@@ -209,4 +211,5 @@ public class Diagram
     //    //rect.y = h;
     //    //h += drawsection(g, rect, methods.cast<parametr>().tolist());
     //}
+    #endregion
 }

@@ -12,10 +12,9 @@ internal class App
 {
     public List<Diagram> Diagrams = new List<Diagram>();
     public Diagram ActiveDiagram { get; private set; } = null;
-    public int Width { get; set; }
-    public int Height { get; set; } //only for extra space (wont be smaller than text needs)
+    public int Width { get; set; } //for centering new diagram
+    public int Height { get; set; } //for centering new diagram
     public Graphics g { get; set; }
-
 
     public App(Graphics g, int width, int height)
     {

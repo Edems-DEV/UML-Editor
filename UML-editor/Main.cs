@@ -49,7 +49,6 @@ public partial class Main : Form
             app.Load(pictureBox1.CreateGraphics(), FDialog.FileName);
             this.pictureBox1.Refresh();
         }
-
     }
     #endregion
 
@@ -118,7 +117,6 @@ public partial class Main : Form
             isDragging = true;
             offset = new Point(e.X - app.ActiveDiagram.X, e.Y - app.ActiveDiagram.Y);
         }
-
     }
     private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
     {
