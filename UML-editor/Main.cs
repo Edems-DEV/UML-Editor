@@ -94,7 +94,6 @@ public partial class Main : Form
     #region Mouse handler
     private bool isDragging = false;
     private Point offset;
-    private Point start;
 
     private int PointIndex = -1;
     private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
@@ -119,7 +118,7 @@ public partial class Main : Form
             {
                 app.SelectPoint(e.Location, offset);
             }
-            else
+            else //move
             {
                 app.ActiveDiagram.X = e.X - offset.X;
                 app.ActiveDiagram.Y = e.Y - offset.Y;

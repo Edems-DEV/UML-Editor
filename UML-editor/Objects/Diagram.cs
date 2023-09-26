@@ -24,8 +24,6 @@ public class Diagram
     public List<Rectangle> GrapPoints { get; set; }
 
     public Graphics g;
-    //int hh = 0;
-    //int ww = 0;
 
     #region Options
     Pen PenBorder = new Pen(Color.Black, 2); //Border
@@ -131,7 +129,7 @@ public class Diagram
     }
     private void DrawSelection(Graphics g, Point farthestPoint)
     {
-        int size = 20; //can be made larger in App.SelectDiagram() to keep good look
+        int size = 10; //can be made larger in App.SelectDiagram() to keep good look
 
         //points = new SelectPoints(X, Y, farthestPoint, size);
         CalcSelection(size);
@@ -182,37 +180,5 @@ public class Diagram
         GrapPoints = points;
         return points;
     }
-    #endregion
-
-    #region ideas
-    //string.Join("\n", list);
-    //private int DrawUniversal(Graphics g, Rectangle rect, string text, int fontSize, Brush Bg, Point Offset = default)
-    //{
-    //    Rectangle rect2 = rect;
-    //    Font font = new Font(FontFamily, fontSize);                        
-
-    //    SizeF textSize = g.MeasureString(text, font);
-    //    int textHeight = (int)textSize.Height;
-    //    rect.Height = textHeight + 10;
-
-    //    g.FillRectangle(Bg, rect2);
-    //    g.DrawRectangle(PenBorder, rect2);
-    //    rect.Offset(Offset);                                                
-    //    g.DrawString(text, font, BrushFont, rect2);
-
-    //    return textHeight;
-    //}
-
-    //public void draw2(graphics g)
-    //{
-    //    //rectangle rect = new rectangle(x, y, width, height);
-    //    //g.fillrectangle(brushbg, rect); //debug
-    //    //int h = y;
-    //    //drawtitle(g,rect); //h += 
-    //    //rect.y = h;
-    //    //h += drawsection(g, rect, properties.cast<parametr>().tolist());
-    //    //rect.y = h;
-    //    //h += drawsection(g, rect, methods.cast<parametr>().tolist());
-    //}
     #endregion
 }

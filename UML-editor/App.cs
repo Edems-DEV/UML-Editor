@@ -106,7 +106,7 @@ internal class App
                     }
                 }
 
-                temp = new Rectangle(diagram.X, diagram.Y, diagram.Width, diagram.Height); //remove Poit size
+                temp = new Rectangle(diagram.X, diagram.Y, diagram.Width, diagram.Height);
                 if (temp.Contains(loc)) //can be outside (remove point padding)
                     newActiveDiagram = diagram;
             }
@@ -125,7 +125,7 @@ internal class App
         return pointIndex;
     }
 
-    static Point CalculateCenter(Rectangle rect) //temp remove
+    static Point CalculateCenter(Rectangle rect) //TODO: remove (temp)
     {
         int centerX = rect.X + rect.Width / 2;
         int centerY = rect.Y + rect.Height / 2;
@@ -133,19 +133,16 @@ internal class App
         return new Point(centerX, centerY);
     }
 
-    public void SelectPoint(Point Loc, Point Offset) //TODO:
+    public void SelectPoint(Point Loc, Point Offset) //TODO: :)
     {
+        //PROBLEM: utika myši
         //temp
         int dragHandle = pointIndex;
 
-        //Point dragPoint = Start; //nelze, chci diff od aktualni pozice
         Point dragPoint = CalculateCenter(GrapPoint); //replace with calculated point
 
         Rectangle oldRect = new Rectangle(ActiveDiagram.X, ActiveDiagram.Y, ActiveDiagram.Width, ActiveDiagram.Height);
-        g.DrawRectangle(Pens.Red, oldRect);
-
-        //int diff_X = Loc.X - dragPoint.X;
-        //int diff_Y = Loc.Y - dragPoint.Y;
+        //g.DrawRectangle(Pens.Red, oldRect); //debug
 
         int diff_X = dragPoint.X - Loc.X;
         int diff_Y = dragPoint.Y - Loc.Y;
@@ -155,7 +152,6 @@ internal class App
             case 1: // Top
                 oldRect.Y -= diff_Y;
                 oldRect.Height += diff_Y;
-                app.ActiveDiagram.X = Loc.X - Offset.X;
                 break;
             case 6: // Down
                 oldRect.Height -= diff_Y;
@@ -189,34 +185,6 @@ internal class App
                 break;
         }
 
-        //switch (pointIndex)
-        //{
-        //    case 1: // Top
-        //        oldRect.Y += diff_Y;
-        //        oldRect.Height += diff_Y;
-        //        break;
-        //    case 6: // Down
-        //        oldRect.Y += ActiveDiagram.Y + diff_Y;
-        //        oldRect.Height += diff_Y;
-        //        break;
-        //    case 3: // Left
-        //        oldRect.X -= diff_X;
-        //        oldRect.Width -= diff_X;
-        //        break;
-        //    case 4: // Right
-        //        oldRect.X += diff_X;
-        //        oldRect.Width += diff_X;
-        //        break;
-        //    case 0: // Scale: Top Left
-        //        break;
-        //    case 7: // Scale: Bottom Right
-        //        break;
-        //    case 2: // Scale: Top Right
-        //        break;
-        //    case 5: // Scale: Bottom Left
-        //        break;
-        //}
-
         ActiveDiagram.X = oldRect.X;
         ActiveDiagram.Y = oldRect.Y;
         ActiveDiagram.Width = oldRect.Width;
@@ -244,7 +212,7 @@ internal class App
 
                 Diagrams = JsonSerializer.Deserialize<List<Diagram>>(json);
 
-                //MessageBox.Show(string.Join(", ", Diagrams.Select(diagram => diagram.Title)));
+                //MessageBox.Show(string.Join(", ", Diagrams.Select(diagram => diagram.Title))); //debug
                 Draw(g); //refresh
 
             }
