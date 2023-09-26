@@ -132,7 +132,7 @@ public class Diagram
     }
     private void DrawSelection(Graphics g, Point farthestPoint)
     {
-        int size = 10;
+        int size = 20; //10
 
         //points = new SelectPoints(X, Y, farthestPoint, size);
         CalcSelection(size);
@@ -148,7 +148,6 @@ public class Diagram
     public List<Rectangle> CalcSelection(int size)
     {
         Point farthestPoint = new Point(ww, hh);
-        
 
         // Calculate center points for columns (Y)
         int c1 = Y - (size / 2);
@@ -175,6 +174,11 @@ public class Diagram
         points.Add(new Rectangle(r1, c3, size, size));
         points.Add(new Rectangle(r2, c3, size, size));
         points.Add(new Rectangle(r3, c3, size, size));
+
+        // Indexes
+        //0 - 1 - 2
+        //3 - x - 4
+        //5 - 6 - 7
 
         GrapPoints = points;
         return points;

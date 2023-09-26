@@ -12,6 +12,8 @@ internal class App
 {
     public List<Diagram> Diagrams = new List<Diagram>();
     public Diagram ActiveDiagram { get; private set; } = null;
+    int pointIndex = -1;
+    
     public int Width { get; set; } //for centering new diagram
     public int Height { get; set; } //for centering new diagram
     public Graphics g { get; set; }
@@ -81,8 +83,6 @@ internal class App
     public int SelectDiagram(Point loc)
     {
         Diagram newActiveDiagram = null;
-        int pointIndex = -1;
-        int x = 0;
 
         int GrapPoinSize = 5;
 
@@ -92,17 +92,16 @@ internal class App
 
             if (temp.Contains(loc)) //large
             {
-                //List<Rectangle> points = diagram.CalcSelection(10);
-                //foreach (var point in points)
-                //{
-                //    if (point.Contains(loc))
-                //    {
-                //        pointIndex = points.IndexOf(point);
-                //        //MessageBox.Show("Index:" + pointIndex);
-                //        break;
-                //    }
-                //    x++;
-                //}
+                List<Rectangle> points = diagram.CalcSelection(10);
+                foreach (var point in points)
+                {
+                    if (point.Contains(loc))
+                    {
+                        pointIndex = points.IndexOf(point);
+                        MessageBox.Show("Index:" + pointIndex); //debug
+                        break;
+                    }
+                }
 
                 temp = new Rectangle(diagram.X, diagram.Y, diagram.Width, diagram.Height); //remove Poit size
                 if (temp.Contains(loc)) //can be outside (remove point padding)
