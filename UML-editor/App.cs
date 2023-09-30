@@ -35,24 +35,24 @@ internal class App
     }
     public void Draw(Graphics g)
     {
-        g.TranslateTransform(Width / 2 - zoomOrigin.X, Height / 2 - zoomOrigin.Y);
-        g.ScaleTransform(zoom, zoom);
+        //g.TranslateTransform(Width / 2 - zoomOrigin.X, Height / 2 - zoomOrigin.Y);
+        //g.ScaleTransform(zoom, zoom);
         //still need new g, because of the refresh
         foreach (var diagram in Diagrams)
         {
             diagram.Draw(g);
         }
-        g.ResetTransform();
+        //g.ResetTransform();
     }
     public void Draw()
     {
-        g.TranslateTransform(Width / 2 - zoomOrigin.X, Height / 2 - zoomOrigin.Y);
-        g.ScaleTransform(zoom, zoom);
+        //g.TranslateTransform(Width / 2 - zoomOrigin.X, Height / 2 - zoomOrigin.Y);
+        //g.ScaleTransform(zoom, zoom);
         foreach (var diagram in Diagrams)
         {
             diagram.Draw(g);
         }
-        g.ResetTransform();
+        //g.ResetTransform();
     }
 
     private float zoom = 1.0f; // Initial zoom level
@@ -109,17 +109,17 @@ internal class App
     {
         Diagram newActiveDiagram = null;
 
-        int GrapPoinSize = 30;
+        int GrapPoinSize = 25;
 
         foreach (var diagram in Diagrams)
         {
-            Rectangle temp = new Rectangle(diagram.X, diagram.Y, diagram.Width + GrapPoinSize, diagram.Height + GrapPoinSize);
-            g.DrawRectangle(Pens.Red, temp); //debug
+            Rectangle temp = new Rectangle(diagram.X - (GrapPoinSize/2), diagram.Y - (GrapPoinSize / 2), diagram.Width + GrapPoinSize, diagram.Height + GrapPoinSize);
+            //g.DrawRectangle(Pens.Red, temp); //debug
 
 
             if (temp.Contains(loc)) //large
             {
-                List<Rectangle> points = diagram.CalcSelection(10);
+                List<Rectangle> points = diagram.CalcSelection(GrapPoinSize);
                 foreach (var point in points)
                 {
                     if (point.Contains(loc))
