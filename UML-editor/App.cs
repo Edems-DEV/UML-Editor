@@ -35,6 +35,8 @@ internal class App
     }
     public void Draw(Graphics g)
     {
+        g.TranslateTransform(Width / 2 - zoomOrigin.X, Height / 2 - zoomOrigin.Y);
+        g.ScaleTransform(zoom, zoom);
         //still need new g, because of the refresh
         foreach (var diagram in Diagrams)
         {
@@ -43,11 +45,33 @@ internal class App
     }
     public void Draw()
     {
+        g.TranslateTransform(Width / 2 - zoomOrigin.X, Height / 2 - zoomOrigin.Y);
+        g.ScaleTransform(zoom, zoom);
         foreach (var diagram in Diagrams)
         {
             diagram.Draw(g);
         }
     }
+
+    private float zoom = 1.0f; // Initial zoom level
+    private Point zoomOrigin = new Point(0, 0); // Zoom center point
+    public void Zoom(int Delta, Point Location)
+    {
+        if (Delta > 0)
+        {
+            // Zoom in
+            zoom *= 1.1f; // Adjust the zoom factor as needed
+        }
+        else if (Delta < 0)
+        {
+            // Zoom out
+            zoom /= 1.1f; // Adjust the zoom factor as needed
+        }
+
+        // Update the zoom origin point to zoom in/out around the mouse cursor
+        zoomOrigin = Location;
+    }
+
     #region Btn
     public void Add(Graphics g) //AddNew <= Btn
     {

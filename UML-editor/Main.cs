@@ -21,6 +21,7 @@ public partial class Main : Form
         app = new App(pictureBox1.CreateGraphics(), this.pictureBox1.Width, this.pictureBox1.Height);
 
         pictureBox1.AllowDrop = true;
+        pictureBox1.MouseWheel += PictureBox1_MouseWheel;
     }
 
     private void pictureBox1_Paint(object sender, PaintEventArgs e)
@@ -179,5 +180,16 @@ public partial class Main : Form
         {
             app.SavePictureBoxToPng(pictureBox1, FDialog.FileName);
         }
+    }
+
+    
+    private void PictureBox1_MouseWheel(object sender, MouseEventArgs e)
+    {
+        app.Width = pictureBox1.Width;
+        app.Height = pictureBox1.Height;
+
+        app.Zoom(e.Delta, e.Location);
+        
+        pictureBox1.Refresh();
     }
 }
