@@ -42,6 +42,7 @@ internal class App
         {
             diagram.Draw(g);
         }
+        g.ResetTransform();
     }
     public void Draw()
     {
@@ -51,24 +52,22 @@ internal class App
         {
             diagram.Draw(g);
         }
+        g.ResetTransform();
     }
 
     private float zoom = 1.0f; // Initial zoom level
     private Point zoomOrigin = new Point(0, 0); // Zoom center point
     public void Zoom(int Delta, Point Location)
     {
-        if (Delta > 0)
+        if (Delta > 0) // Zoom in
         {
-            // Zoom in
-            zoom *= 1.1f; // Adjust the zoom factor as needed
+            zoom *= 1.1f;
         }
-        else if (Delta < 0)
+        else if (Delta < 0) // Zoom out
         {
-            // Zoom out
-            zoom /= 1.1f; // Adjust the zoom factor as needed
+            zoom /= 1.1f;
         }
 
-        // Update the zoom origin point to zoom in/out around the mouse cursor
         zoomOrigin = Location;
     }
 
@@ -115,6 +114,8 @@ internal class App
         foreach (var diagram in Diagrams)
         {
             Rectangle temp = new Rectangle(diagram.X, diagram.Y, diagram.Width + GrapPoinSize, diagram.Height + GrapPoinSize);
+            g.DrawRectangle(Pens.Red, temp); //debug
+
 
             if (temp.Contains(loc)) //large
             {
@@ -124,7 +125,7 @@ internal class App
                     if (point.Contains(loc))
                     {
                         pointIndex = points.IndexOf(point);
-                        GrapPoint = point; 
+                        GrapPoint = point;
                         //MessageBox.Show("Index:" + pointIndex); //debug
                         break;
                     }
