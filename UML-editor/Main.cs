@@ -36,7 +36,7 @@ public partial class Main : Form
 
     private void btn_Save_Click(object sender, EventArgs e)
     {
-        Save();
+        SaveJson();
     }
 
     private void btn_Load_Click(object sender, EventArgs e)
@@ -152,18 +152,32 @@ public partial class Main : Form
         }
         else if (e.Control && e.KeyCode == Keys.S)
         {
-            Save();
+            SaveJson();
+        }
+        else if (e.Control && e.KeyCode == Keys.X 
+                || e.KeyCode == Keys.PrintScreen)
+        {
+            SaveImage();
         }
     }
-    private void Save()
+    private void SaveJson()
     {
         SaveFileDialog FDialog = new SaveFileDialog();
         FDialog.Filter = "Json files (*.json)|*.json";
 
         if (FDialog.ShowDialog() == DialogResult.OK)
         {
-
             app.Save(FDialog.FileName);
+        }
+    }
+    private void SaveImage()
+    {
+        SaveFileDialog FDialog = new SaveFileDialog();
+        FDialog.Filter = "PNG Files (*.png)|*.png";
+
+        if (FDialog.ShowDialog() == DialogResult.OK)
+        {
+            app.SavePictureBoxToPng(pictureBox1, FDialog.FileName);
         }
     }
 }

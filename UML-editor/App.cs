@@ -174,7 +174,7 @@ internal class App
                 oldRect.Height -= diff_Y;
                 break;
             case 2: // Scale: Top Right
-                oldRect.Width += diff_X;
+                 oldRect.Width += diff_X;
                 oldRect.Y -= diff_Y;
                 oldRect.Height += diff_Y;
                 break;
@@ -220,6 +220,14 @@ internal class App
             {
                 Console.WriteLine($"An error occurred while loading the JSON file: {ex.Message}");
             }
+        }
+    }
+    public void SavePictureBoxToPng(PictureBox pictureBox, string filePath)
+    {
+        using (Bitmap bmp = new Bitmap(pictureBox.Width, pictureBox.Height))
+        {
+            pictureBox.DrawToBitmap(bmp, new Rectangle(0, 0, pictureBox.Width, pictureBox.Height));
+            bmp.Save(filePath, System.Drawing.Imaging.ImageFormat.Png);
         }
     }
     #endregion
