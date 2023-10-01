@@ -35,24 +35,24 @@ internal class App
     }
     public void Draw(Graphics g)
     {
-        //g.TranslateTransform(Width / 2 - zoomOrigin.X, Height / 2 - zoomOrigin.Y);
-        //g.ScaleTransform(zoom, zoom);
+        g.TranslateTransform(Width / 2 - zoomOrigin.X, Height / 2 - zoomOrigin.Y);
+        g.ScaleTransform(zoom, zoom);
         //still need new g, because of the refresh
         foreach (var diagram in Diagrams)
         {
             diagram.Draw(g);
         }
-        //g.ResetTransform();
+        g.ResetTransform();
     }
     public void Draw()
     {
-        //g.TranslateTransform(Width / 2 - zoomOrigin.X, Height / 2 - zoomOrigin.Y);
-        //g.ScaleTransform(zoom, zoom);
+        g.TranslateTransform(Width / 2 - zoomOrigin.X, Height / 2 - zoomOrigin.Y);
+        g.ScaleTransform(zoom, zoom);
         foreach (var diagram in Diagrams)
         {
             diagram.Draw(g);
         }
-        //g.ResetTransform();
+        g.ResetTransform();
     }
 
     private float zoom = 1.0f; // Initial zoom level
@@ -109,46 +109,62 @@ internal class App
     {
         Diagram newActiveDiagram = null;
 
-        int GrapPoinSize = 25;
+        int GrapPointSize = 25;
 
         foreach (var diagram in Diagrams)
         {
-            Rectangle temp = new Rectangle(diagram.X - (GrapPoinSize/2), diagram.Y - (GrapPoinSize / 2), diagram.Width + GrapPoinSize, diagram.Height + GrapPoinSize);
-            //g.DrawRectangle(Pens.Red, temp); //debug
+            // Calculate the selection rectangle including points with zoom
+            Rectangle selectionRect = new Rectangle(
+                (int)((diagram.X - GrapPointSize / 2 - zoomOrigin.X) * zoom + Width / 2),
+                (int)((diagram.Y - GrapPointSize / 2 - zoomOrigin.Y) * zoom + Height / 2),
+                (int)((diagram.Width + GrapPointSize) * zoom),
+                (int)((diagram.Height + GrapPointSize) * zoom)
+            );
 
+            g.DrawRectangle(Pens.Red, selectionRect);
 
-            if (temp.Contains(loc)) //large
+            if (selectionRect.Contains(loc)) // If the cursor is inside the selection rectangle
             {
-                List<Rectangle> points = diagram.CalcSelection(GrapPoinSize);
-                foreach (var point in points)
+                // Check if the cursor is inside any of the diagram's points
+                List<Rectangle> points = diagram.CalcSelection(GrapPointSize);
+
+                foreach (var pointRect in points)
                 {
-                    if (point.Contains(loc))
+                    // Adjust the point coordinates with zoom and zoom origin
+                    Rectangle adjustedPointRect = new Rectangle(
+                        (int)((pointRect.X - zoomOrigin.X) * zoom + Width / 2),
+                        (int)((pointRect.Y - zoomOrigin.Y) * zoom + Height / 2),
+                        (int)(pointRect.Width * zoom),
+                        (int)(pointRect.Height * zoom)
+                    );
+
+                    if (adjustedPointRect.Contains(loc))
                     {
-                        pointIndex = points.IndexOf(point);
-                        GrapPoint = point;
-                        //MessageBox.Show("Index:" + pointIndex); //debug
+                        pointIndex = points.IndexOf(pointRect);
+                        GrapPoint = pointRect;
                         break;
                     }
                 }
 
-                temp = new Rectangle(diagram.X, diagram.Y, diagram.Width, diagram.Height);
-                if (temp.Contains(loc)) //can be outside (remove point padding)
-                    newActiveDiagram = diagram;
+                // Set newActiveDiagram to the diagram being selected
+                newActiveDiagram = diagram;
             }
         }
 
-
-        //deselect old
+        // Deselect the old ActiveDiagram
         if (ActiveDiagram != null)
             ActiveDiagram.Selected = false;
-        //select new
+
+        // Select the newActiveDiagram
         ActiveDiagram = newActiveDiagram;
-        // select new
+
+        // If a new diagram is selected, mark it as selected
         if (ActiveDiagram != null)
             ActiveDiagram.Selected = true;
 
         return pointIndex;
     }
+
 
     static Point CalculateCenter(Rectangle rect) //TODO: remove (temp)
     {
