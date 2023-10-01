@@ -26,8 +26,8 @@ internal class App
         this.Height = height;
         this.g = g; //TODO: temp (re-think)
 
-        Diagram newDiagram1 = new Diagram() { Title = "Diagram1", X = 10, Y = 10, Width = 300, Height = 200 };
-        Diagram newDiagram2 = new Diagram() { Title = "Diagram2", X = 400, Y = 10, Width = 300, Height = 300 };
+        Diagram newDiagram1 = new Diagram() { Title = "Diagram1", X = -563, Y = -258, Width = 300, Height = 200 };
+        Diagram newDiagram2 = new Diagram() { Title = "Diagram2", X = -248, Y = -258, Width = 300, Height = 300 };
         Diagrams.Add(newDiagram1);
         Diagrams.Add(newDiagram2);
         newDiagram1.AddG(g);
@@ -55,8 +55,8 @@ internal class App
         g.ResetTransform();
     }
 
-    private float zoom = 1.0f; // Initial zoom level
-    private Point zoomOrigin = new Point(0, 0); // Zoom center point
+    public float zoom = 1.0f; // Initial zoom level
+    public Point zoomOrigin = new Point(0, 0); // Zoom center point
     public void Zoom(int Delta, Point Location)
     {
         if (Delta > 0) // Zoom in
@@ -127,7 +127,7 @@ internal class App
                 (int)(diagram.Height + GrapPointRadius * 2 / zoom)
             );
 
-            g.DrawRectangle(Pens.Red, diagramBounds); //debug
+            //g.DrawRectangle(Pens.Red, diagramBounds); //debug (broken)
 
             if (diagramBounds.Contains(inverseLoc))
             {
@@ -136,7 +136,7 @@ internal class App
 
                 foreach (var point in points)
                 {
-                    g.DrawRectangle(Pens.Blue, point); //debug
+                    //g.DrawRectangle(Pens.Blue, point); //debug (broken)
                     // Check if the transformed input point is within the point's bounding box
                     if (point.Contains(inverseLoc))
                     {

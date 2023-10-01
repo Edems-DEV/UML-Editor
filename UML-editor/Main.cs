@@ -160,6 +160,12 @@ public partial class Main : Form
         {
             SaveImage();
         }
+        else if (e.Control && e.KeyCode == Keys.R) //return
+        {
+            app.zoom = 1f;
+            app.zoomOrigin = new Point(0, 0);
+            pictureBox1.Refresh();
+        }
     }
     private void SaveJson()
     {
