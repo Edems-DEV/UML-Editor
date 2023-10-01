@@ -109,61 +109,65 @@ internal class App
     {
         Diagram newActiveDiagram = null;
 
-        int GrapPointSize = 25;
+        int GrapPointRadius = 25; // Adjust this as needed
+
+        // Apply the inverse transformations to the input point
+        Point inverseLoc = new Point(
+            (int)((loc.X - Width / 2 + zoomOrigin.X) / zoom),
+            (int)((loc.Y - Height / 2 + zoomOrigin.Y) / zoom)
+        );
 
         foreach (var diagram in Diagrams)
         {
-            // Calculate the selection rectangle including points with zoom
-            Rectangle selectionRect = new Rectangle(
-                (int)((diagram.X - GrapPointSize / 2 - zoomOrigin.X) * zoom + Width / 2),
-                (int)((diagram.Y - GrapPointSize / 2 - zoomOrigin.Y) * zoom + Height / 2),
-                (int)((diagram.Width + GrapPointSize) * zoom),
-                (int)((diagram.Height + GrapPointSize) * zoom)
+            // Calculate the diagram's bounding box in world coordinates
+            Rectangle diagramBounds = new Rectangle(
+                (int)(diagram.X - GrapPointRadius / zoom),
+                (int)(diagram.Y - GrapPointRadius / zoom),
+                (int)(diagram.Width + GrapPointRadius * 2 / zoom),
+                (int)(diagram.Height + GrapPointRadius * 2 / zoom)
             );
 
-            g.DrawRectangle(Pens.Red, selectionRect);
+            g.DrawRectangle(Pens.Red, diagramBounds); //debug
 
-            if (selectionRect.Contains(loc)) // If the cursor is inside the selection rectangle
+            if (diagramBounds.Contains(inverseLoc))
             {
-                // Check if the cursor is inside any of the diagram's points
-                List<Rectangle> points = diagram.CalcSelection(GrapPointSize);
+                // Calculate the points for diagram selection in world coordinates
+                List<Rectangle> points = diagram.CalcSelection((int)(GrapPointRadius / zoom));
 
-                foreach (var pointRect in points)
+                foreach (var point in points)
                 {
-                    // Adjust the point coordinates with zoom and zoom origin
-                    Rectangle adjustedPointRect = new Rectangle(
-                        (int)((pointRect.X - zoomOrigin.X) * zoom + Width / 2),
-                        (int)((pointRect.Y - zoomOrigin.Y) * zoom + Height / 2),
-                        (int)(pointRect.Width * zoom),
-                        (int)(pointRect.Height * zoom)
-                    );
-
-                    if (adjustedPointRect.Contains(loc))
+                    g.DrawRectangle(Pens.Blue, point); //debug
+                    // Check if the transformed input point is within the point's bounding box
+                    if (point.Contains(inverseLoc))
                     {
-                        pointIndex = points.IndexOf(pointRect);
-                        GrapPoint = pointRect;
+                        pointIndex = points.IndexOf(point);
+                        GrapPoint = point;
                         break;
                     }
                 }
 
-                // Set newActiveDiagram to the diagram being selected
-                newActiveDiagram = diagram;
+                // Check if the transformed input point is within the diagram's bounding box
+                if (diagramBounds.Contains(inverseLoc))
+                {
+                    newActiveDiagram = diagram;
+                }
             }
         }
 
-        // Deselect the old ActiveDiagram
+        // Deselect old
         if (ActiveDiagram != null)
             ActiveDiagram.Selected = false;
 
-        // Select the newActiveDiagram
+        // Select new
         ActiveDiagram = newActiveDiagram;
 
-        // If a new diagram is selected, mark it as selected
+        // Select new
         if (ActiveDiagram != null)
             ActiveDiagram.Selected = true;
 
         return pointIndex;
     }
+
 
 
     static Point CalculateCenter(Rectangle rect) //TODO: remove (temp)
