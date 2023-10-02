@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -28,10 +29,13 @@ internal class App
 
         Diagram newDiagram1 = new Diagram() { Title = "Diagram1", X = -563, Y = -258, Width = 300, Height = 200 };
         Diagram newDiagram2 = new Diagram() { Title = "Diagram2", X = -248, Y = -258, Width = 300, Height = 300 };
+        Diagram newDiagram3 = new Diagram() { Title = "Place at 0", X = 0, Y = 0, Width = 300, Height = 300 };
         Diagrams.Add(newDiagram1);
         Diagrams.Add(newDiagram2);
+        Diagrams.Add(newDiagram3);
         newDiagram1.AddG(g);
         newDiagram2.AddG(g);
+        newDiagram3.AddG(g);
     }
     public void Draw(Graphics g)
     {
@@ -282,40 +286,21 @@ internal class App
     }
     public void SavePictureBoxToPng(PictureBox pictureBox, string filePath)
     {
-        //using (Bitmap bmp = new Bitmap(pictureBox.Width, pictureBox.Height))
-        //{
-        //    pictureBox.DrawToBitmap(bmp, new Rectangle(0, 0, pictureBox.Width, pictureBox.Height));
-        //    bmp.Save(filePath, System.Drawing.Imaging.ImageFormat.Png);
-        //}
+        float oldZoom = zoom;
+        Point oldozoom = zoomOrigin;
+        
+        zoom = 1;
+        zoomOrigin = new Point(0, 0);
+        Draw(g);
 
-        CalcCanvas();
-        int width2 = Math.Abs(BottomLeft.X - TopRight.X);
-        int height2 = Math.Abs(BottomLeft.Y);
-
-        using (Bitmap bmp = new Bitmap(width2, height2))
+        using (Bitmap bmp = new Bitmap(pictureBox.Width, pictureBox.Height))
         {
-            pictureBox.DrawToBitmap(bmp, new Rectangle(TopRight.X, TopRight.Y, width2, height2));
+            pictureBox.DrawToBitmap(bmp, new Rectangle(0, 0, pictureBox.Width, pictureBox.Height));
             bmp.Save(filePath, System.Drawing.Imaging.ImageFormat.Png);
         }
-    }
-    //MAX
-    Point TopRight = new Point(-100000000, -1000000000);
-    //LEAST
-    Point BottomLeft = new Point(100000000, 100000000);
-    public void CalcCanvas()
-    {
-        foreach (Diagram diagram in Diagrams)
-        {
-            if(TopRight.X < diagram.X)
-                TopRight.X = diagram.X;
-            if(TopRight.Y < diagram.Y)
-                TopRight.Y = diagram.Y;
-            if(BottomLeft.X > (diagram.X + diagram.Width))
-                BottomLeft.X = diagram.X;
-            if (BottomLeft.Y > (diagram.Y + diagram.Height))
-                BottomLeft.Y = diagram.Y;
-        }
-        //MessageBox.Show($"MAX: X: {TopRight.X};Y: {TopRight.Y} | LEAST: X: {BottomLeft.X};Y: {BottomLeft.Y}"); //debug
+        zoom = oldZoom;
+        zoomOrigin = oldozoom;
+        Draw(g);
     }
     #endregion
 

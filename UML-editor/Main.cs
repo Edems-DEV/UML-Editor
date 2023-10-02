@@ -171,6 +171,7 @@ public partial class Main : Form
                 || e.KeyCode == Keys.PrintScreen)
         {
             SaveImage();
+            pictureBox1.Refresh();
         }
         else if (e.Control && e.KeyCode == Keys.R) //return
         {
