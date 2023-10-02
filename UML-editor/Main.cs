@@ -90,11 +90,14 @@ public partial class Main : Form
     private void pictureBox1_MouseDoubleClick_1(object sender, MouseEventArgs e)
     {
         app.Edit(e.Location);
+        //MessageBox.Show($"X: {e.X};Y: {e.Y}"); //debug
+        //app.CalcCanvas();
     }
 
     #region Mouse handler
     private bool isDragging = false;
     private Point offset;
+    private Point mouse;
 
     private int PointIndex = -1;
     private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
@@ -110,6 +113,7 @@ public partial class Main : Form
 
         isDragging = true;
         offset = new Point(e.X - app.ActiveDiagram.X, e.Y - app.ActiveDiagram.Y);
+        mouse = new Point(e.X, e.Y);
     }
     private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
     {
@@ -117,12 +121,13 @@ public partial class Main : Form
         {
             if (app.pointIndex != -1) //change size
             {
-                app.SelectPoint(e.Location, offset);
+                //app.SelectPoint(e.Location, mouse);
             }
             else //move
             {
-                app.ActiveDiagram.X = e.X - offset.X;
-                app.ActiveDiagram.Y = e.Y - offset.Y;
+                //app.ActiveDiagram.X = e.X - offset.X;
+                //app.ActiveDiagram.Y = e.Y - offset.Y;
+                app.Move(e.Location, offset);
             }
 
             app.Draw(pictureBox1.CreateGraphics());
@@ -133,6 +138,13 @@ public partial class Main : Form
     }
     private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
     {
+        if (app.pointIndex != -1) //change size
+        {
+            app.SelectPoint(e.Location, mouse);
+            app.Draw(pictureBox1.CreateGraphics());
+            pictureBox1.Refresh();
+        }
+
         //reset
         app.pointIndex = -1;
         isDragging = false;

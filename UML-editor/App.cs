@@ -42,7 +42,7 @@ internal class App
         {
             diagram.Draw(g);
         }
-        g.ResetTransform();
+        //g.ResetTransform();
     }
     public void Draw()
     {
@@ -52,7 +52,7 @@ internal class App
         {
             diagram.Draw(g);
         }
-        g.ResetTransform();
+        //g.ResetTransform();
     }
 
     public float zoom = 1.0f; // Initial zoom level
@@ -109,7 +109,7 @@ internal class App
     {
         Diagram newActiveDiagram = null;
 
-        int GrapPointRadius = 25; // Adjust this as needed
+        float GrapPointRadius = 25 * zoom; // Adjust this as needed
 
         // Apply the inverse transformations to the input point
         Point inverseLoc = new Point(
@@ -184,7 +184,10 @@ internal class App
         //temp
         int dragHandle = pointIndex;
 
-        Point dragPoint = CalculateCenter(GrapPoint); //replace with calculated point
+        //Point dragPoint = CalculateCenter(GrapPoint); //replace with calculated point
+        Point dragPoint = Offset;
+        //dragPoint.X = (int)(dragPoint.X * zoom);
+        //dragPoint.Y = (int)(dragPoint.Y * zoom);
 
         Rectangle oldRect = new Rectangle(ActiveDiagram.X, ActiveDiagram.Y, ActiveDiagram.Width, ActiveDiagram.Height);
         //g.DrawRectangle(Pens.Red, oldRect); //debug
@@ -234,6 +237,16 @@ internal class App
         ActiveDiagram.Y = oldRect.Y;
         ActiveDiagram.Width = oldRect.Width;
         ActiveDiagram.Height = oldRect.Height;
+        //MessageBox.Show($"X: {diff_X};Y: {diff_Y}"); //debug
+    }
+
+    public void Move(Point e, Point offset)
+    {
+        //ActiveDiagram.X = (int)((e.X - offset.X) * zoom);
+        //ActiveDiagram.Y = (int)((e.Y - offset.Y) * zoom);
+
+        ActiveDiagram.X = e.X - offset.X;
+        ActiveDiagram.Y = e.Y - offset.Y;
     }
 
     #region Save/Load
@@ -269,11 +282,40 @@ internal class App
     }
     public void SavePictureBoxToPng(PictureBox pictureBox, string filePath)
     {
-        using (Bitmap bmp = new Bitmap(pictureBox.Width, pictureBox.Height))
+        //using (Bitmap bmp = new Bitmap(pictureBox.Width, pictureBox.Height))
+        //{
+        //    pictureBox.DrawToBitmap(bmp, new Rectangle(0, 0, pictureBox.Width, pictureBox.Height));
+        //    bmp.Save(filePath, System.Drawing.Imaging.ImageFormat.Png);
+        //}
+
+        CalcCanvas();
+        int width2 = Math.Abs(BottomLeft.X - TopRight.X);
+        int height2 = Math.Abs(BottomLeft.Y);
+
+        using (Bitmap bmp = new Bitmap(width2, height2))
         {
-            pictureBox.DrawToBitmap(bmp, new Rectangle(0, 0, pictureBox.Width, pictureBox.Height));
+            pictureBox.DrawToBitmap(bmp, new Rectangle(TopRight.X, TopRight.Y, width2, height2));
             bmp.Save(filePath, System.Drawing.Imaging.ImageFormat.Png);
         }
+    }
+    //MAX
+    Point TopRight = new Point(-100000000, -1000000000);
+    //LEAST
+    Point BottomLeft = new Point(100000000, 100000000);
+    public void CalcCanvas()
+    {
+        foreach (Diagram diagram in Diagrams)
+        {
+            if(TopRight.X < diagram.X)
+                TopRight.X = diagram.X;
+            if(TopRight.Y < diagram.Y)
+                TopRight.Y = diagram.Y;
+            if(BottomLeft.X > (diagram.X + diagram.Width))
+                BottomLeft.X = diagram.X;
+            if (BottomLeft.Y > (diagram.Y + diagram.Height))
+                BottomLeft.Y = diagram.Y;
+        }
+        //MessageBox.Show($"MAX: X: {TopRight.X};Y: {TopRight.Y} | LEAST: X: {BottomLeft.X};Y: {BottomLeft.Y}"); //debug
     }
     #endregion
 
