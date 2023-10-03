@@ -38,7 +38,7 @@ public class Diagram
 
     public Diagram()
     {
-        //this.g = g; //nemuzu potom loadovat JOSN
+        //this.g = g; //then i can't load JSON
         #region Test data
         properties.Add(new Property() { Attribute = "+", Name = "name", Type = "string" });
         properties.Add(new Property() { Attribute = "+", Name = "suername", Type = "string" });

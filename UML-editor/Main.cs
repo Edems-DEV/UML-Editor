@@ -90,8 +90,15 @@ public partial class Main : Form
     private void pictureBox1_MouseDoubleClick_1(object sender, MouseEventArgs e)
     {
         app.Edit(e.Location);
-        //MessageBox.Show($"X: {e.X};Y: {e.Y}"); //debug
-        //app.CalcCanvas();
+    }
+    private void PictureBox1_MouseWheel(object sender, MouseEventArgs e)
+    {
+        app.Width = pictureBox1.Width;
+        app.Height = pictureBox1.Height;
+
+        app.Zoom(e.Delta, e.Location);
+
+        pictureBox1.Refresh();
     }
 
     #region Mouse handler
@@ -180,6 +187,7 @@ public partial class Main : Form
             pictureBox1.Refresh();
         }
     }
+    #region Helpers
     private void SaveJson()
     {
         SaveFileDialog FDialog = new SaveFileDialog();
@@ -200,15 +208,5 @@ public partial class Main : Form
             app.SavePictureBoxToPng(pictureBox1, FDialog.FileName);
         }
     }
-
-    
-    private void PictureBox1_MouseWheel(object sender, MouseEventArgs e)
-    {
-        app.Width = pictureBox1.Width;
-        app.Height = pictureBox1.Height;
-
-        app.Zoom(e.Delta, e.Location);
-        
-        pictureBox1.Refresh();
-    }
+    #endregion
 }

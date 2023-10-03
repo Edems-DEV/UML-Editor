@@ -29,24 +29,21 @@ internal class App
 
         Diagram newDiagram1 = new Diagram() { Title = "Diagram1", X = -563, Y = -258, Width = 300, Height = 200 };
         Diagram newDiagram2 = new Diagram() { Title = "Diagram2", X = -248, Y = -258, Width = 300, Height = 300 };
-        Diagram newDiagram3 = new Diagram() { Title = "Place at 0", X = 0, Y = 0, Width = 300, Height = 300 };
         Diagrams.Add(newDiagram1);
         Diagrams.Add(newDiagram2);
-        Diagrams.Add(newDiagram3);
         newDiagram1.AddG(g);
         newDiagram2.AddG(g);
-        newDiagram3.AddG(g);
     }
     public void Draw(Graphics g)
     {
+        //still need new g, because of the refresh
+        
         g.TranslateTransform(Width / 2 - zoomOrigin.X, Height / 2 - zoomOrigin.Y);
         g.ScaleTransform(zoom, zoom);
-        //still need new g, because of the refresh
         foreach (var diagram in Diagrams)
         {
             diagram.Draw(g);
         }
-        //g.ResetTransform();
     }
     public void Draw()
     {
@@ -56,7 +53,6 @@ internal class App
         {
             diagram.Draw(g);
         }
-        //g.ResetTransform();
     }
 
     public float zoom = 1.0f; // Initial zoom level
@@ -115,7 +111,7 @@ internal class App
 
         float GrapPointRadius = 25 * zoom; // Adjust this as needed
 
-        // Apply the inverse transformations to the input point
+        // Reverse transform
         Point inverseLoc = new Point(
             (int)((loc.X - Width / 2 + zoomOrigin.X) / zoom),
             (int)((loc.Y - Height / 2 + zoomOrigin.Y) / zoom)
@@ -123,7 +119,7 @@ internal class App
 
         foreach (var diagram in Diagrams)
         {
-            // Calculate the diagram's bounding box in world coordinates
+            // Reverse transform
             Rectangle diagramBounds = new Rectangle(
                 (int)(diagram.X - GrapPointRadius / zoom),
                 (int)(diagram.Y - GrapPointRadius / zoom),
@@ -135,13 +131,12 @@ internal class App
 
             if (diagramBounds.Contains(inverseLoc))
             {
-                // Calculate the points for diagram selection in world coordinates
                 List<Rectangle> points = diagram.CalcSelection((int)(GrapPointRadius / zoom));
 
                 foreach (var point in points)
                 {
                     //g.DrawRectangle(Pens.Blue, point); //debug (broken)
-                    // Check if the transformed input point is within the point's bounding box
+
                     if (point.Contains(inverseLoc))
                     {
                         pointIndex = points.IndexOf(point);
@@ -150,7 +145,6 @@ internal class App
                     }
                 }
 
-                // Check if the transformed input point is within the diagram's bounding box
                 if (diagramBounds.Contains(inverseLoc))
                 {
                     newActiveDiagram = diagram;
@@ -170,16 +164,6 @@ internal class App
             ActiveDiagram.Selected = true;
 
         return pointIndex;
-    }
-
-
-
-    static Point CalculateCenter(Rectangle rect) //TODO: remove (temp)
-    {
-        int centerX = rect.X + rect.Width / 2;
-        int centerY = rect.Y + rect.Height / 2;
-
-        return new Point(centerX, centerY);
     }
 
     public void SelectPoint(Point Loc, Point Offset) //TODO: :)
@@ -295,6 +279,7 @@ internal class App
 
         using (Bitmap bmp = new Bitmap(pictureBox.Width, pictureBox.Height))
         {
+            //relativní jako mouse-click na viditelný picturebox (nelze použít diagram X;Y)
             pictureBox.DrawToBitmap(bmp, new Rectangle(0, 0, pictureBox.Width, pictureBox.Height));
             bmp.Save(filePath, System.Drawing.Imaging.ImageFormat.Png);
         }
