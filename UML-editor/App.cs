@@ -173,14 +173,11 @@ internal class App
         Rectangle oldRect = new Rectangle(ActiveDiagram.X, ActiveDiagram.Y, ActiveDiagram.Width, ActiveDiagram.Height);
         //g.DrawRectangle(Pens.Red, oldRect); //debug
 
-        int diff_X = dragPoint.X - Loc.X;
-        int diff_Y = dragPoint.Y - Loc.Y;
-
         float diff_Xx = ((dragPoint.X - Loc.X) / zoom);
         float diff_Yy = ((dragPoint.Y - Loc.Y) / zoom);
 
-        diff_X = (int)Math.Round(diff_Xx);
-        diff_Y = (int)Math.Round(diff_Yy);
+        int diff_X = (int)Math.Round(diff_Xx);
+        int diff_Y = (int)Math.Round(diff_Yy);
 
 
         switch (pointIndex)
@@ -233,6 +230,8 @@ internal class App
         //ActiveDiagram.X = e.X - offset.X;
         //ActiveDiagram.Y = e.Y - offset.Y;
 
+        //stick but fly away
+        //need flow, int is broken
         float diff_X = (e.X - offset.X) / zoom;
         float diff_Y = (e.Y - offset.Y) / zoom;
 
@@ -272,6 +271,7 @@ internal class App
     }
     public void SavePictureBoxToPng(PictureBox pictureBox, string filePath)
     {
+        #region -
         float oldZoom = zoom;
         Point oldozoom = zoomOrigin;
         
@@ -279,15 +279,18 @@ internal class App
         zoomOrigin = new Point(0, 0);
         Draw(g);
 
+        //relativní jako mouse-click na viditelný picturebox (nelze použít diagram X;Y)
+        #endregion
         using (Bitmap bmp = new Bitmap(pictureBox.Width, pictureBox.Height))
         {
-            //relativní jako mouse-click na viditelný picturebox (nelze použít diagram X;Y)
             pictureBox.DrawToBitmap(bmp, new Rectangle(0, 0, pictureBox.Width, pictureBox.Height));
             bmp.Save(filePath, System.Drawing.Imaging.ImageFormat.Png);
         }
+        #region -
         zoom = oldZoom;
         zoomOrigin = oldozoom;
         Draw(g);
+        #endregion
     }
     #endregion
 
