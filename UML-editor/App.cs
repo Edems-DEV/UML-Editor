@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.Logging;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -175,6 +176,13 @@ internal class App
         int diff_X = dragPoint.X - Loc.X;
         int diff_Y = dragPoint.Y - Loc.Y;
 
+        float diff_Xx = ((dragPoint.X - Loc.X) / zoom);
+        float diff_Yy = ((dragPoint.Y - Loc.Y) / zoom);
+
+        diff_X = (int)Math.Round(diff_Xx);
+        diff_Y = (int)Math.Round(diff_Yy);
+
+
         switch (pointIndex)
         {
             case 1: // Top
@@ -222,11 +230,14 @@ internal class App
 
     public void Move(Point e, Point offset)
     {
-        //ActiveDiagram.X = (int)((e.X - offset.X) * zoom);
-        //ActiveDiagram.Y = (int)((e.Y - offset.Y) * zoom);
+        //ActiveDiagram.X = e.X - offset.X;
+        //ActiveDiagram.Y = e.Y - offset.Y;
 
-        ActiveDiagram.X = e.X - offset.X;
-        ActiveDiagram.Y = e.Y - offset.Y;
+        float diff_X = (e.X - offset.X) / zoom;
+        float diff_Y = (e.Y - offset.Y) / zoom;
+
+        ActiveDiagram.X = (int)Math.Round(diff_X);
+        ActiveDiagram.Y = (int)Math.Round(diff_Y);
     }
 
     #region Save/Load
