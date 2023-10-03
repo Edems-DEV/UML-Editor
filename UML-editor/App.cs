@@ -166,17 +166,9 @@ internal class App
         return pointIndex;
     }
 
-    public void SelectPoint(Point Loc, Point Offset) //TODO: :)
+    public void SelectPoint(Point Loc, Point Offset)
     {
-        //PROBLEM: utika myši
-        //temp
-        int dragHandle = pointIndex;
-
-        //Point dragPoint = CalculateCenter(GrapPoint); //replace with calculated point
         Point dragPoint = Offset;
-        //dragPoint.X = (int)(dragPoint.X * zoom);
-        //dragPoint.Y = (int)(dragPoint.Y * zoom);
-
         Rectangle oldRect = new Rectangle(ActiveDiagram.X, ActiveDiagram.Y, ActiveDiagram.Width, ActiveDiagram.Height);
         //g.DrawRectangle(Pens.Red, oldRect); //debug
 
@@ -260,7 +252,6 @@ internal class App
 
                 //MessageBox.Show(string.Join(", ", Diagrams.Select(diagram => diagram.Title))); //debug
                 Draw(g); //refresh
-
             }
             catch (Exception ex)
             {
